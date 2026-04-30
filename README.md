@@ -21,3 +21,13 @@ It handles:
 ## 🧠 Simple Idea
 
 Instead of clients directly calling microservices:
+
+Client → Backend Services
+
+With RFlow:
+
+Client → RFlow API Gateway → Backend Services
+
+So RFlow controls everything before requests reach the actual system.
+
+---
