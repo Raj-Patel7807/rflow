@@ -1,34 +1,45 @@
 package com.rflow.userservice.service;
 
+import com.rflow.userservice.exception.UserNotFoundException;
 import com.rflow.userservice.model.User;
+import com.rflow.userservice.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    private List<User> users = new ArrayList<>();
-
-    public UserService() {
-        users.add(new User(1L, "Raj", "raj@gmail.com"));
-        users.add(new User(2L, "RajJR", "rajjr@gmail.com"));
-        users.add(new User(3L, "user", "user@gmail.com"));
-        users.add(new User(4L, "user1", "user1@gmail.com"));
-        users.add(new User(5L, "user2", "user2@gmail.com"));
-    }
+    private final UserRepository userRepository;
 
     public List<User> getAllUsers() {
-        return users;
+        return userRepository.findAll();
     }
 
     public User getUserById(Long userId) {
-        for(int i=0; i<users.size(); i++) {
-            if(users.get(i).getId() == userId) {
-                return users.get(i);
-            }
-        }
-        return null;
+        return userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException("User Not Found with Id: " + userId)
+        );
+    }
+
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public User updateUser(Long id, User user) {
+        User oldUser = userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("User Not Found with Id: " + id)
+        );
+
+        oldUser.setName(user.getName());
+        oldUser.setEmail(user.getEmail());
+
+        return userRepository.save(oldUser);
     }
 }

@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/rflow_users
     username: postgres
-    password: Raj@PostgreSQL2026
+    password: DATABASE_PASSWORD
 
   sql:
     init:
