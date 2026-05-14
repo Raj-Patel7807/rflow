@@ -15,7 +15,7 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Payment>> getAllPayments() {
         return ResponseEntity.ok(paymentService.getAllPayments());
     }
@@ -42,7 +42,7 @@ public class PaymentController {
         return ResponseEntity.ok(payments);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Payment> createPayment(@RequestBody Payment payment) {
         return ResponseEntity.status(201).body(paymentService.createPayment(payment));
     }
@@ -57,5 +57,10 @@ public class PaymentController {
         paymentService.deletePayment(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Payment> updatePaymentStatus(@PathVariable Long id, @RequestBody Payment payment) {
+        return ResponseEntity.ok(paymentService.updatePaymentStatus(id, payment));
     }
 }

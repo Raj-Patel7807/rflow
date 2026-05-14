@@ -43,6 +43,16 @@ public class PaymentService {
         return paymentRepository.save(oldPayment);
     }
 
+    public Payment updatePaymentStatus(Long id, Payment payment) {
+        Payment oldPayment = paymentRepository.findById(id).orElseThrow(
+                () -> new PaymentNotFoundException("Payment Not Found with Id: " + id)
+        );
+
+        oldPayment.setStatus(payment.getStatus());
+
+        return paymentRepository.save(oldPayment);
+    }
+
     public void deletePayment(Long id) {
         paymentRepository.deleteById(id);
     }
