@@ -1,7 +1,10 @@
 package com.rflow.gateway.repository;
 
+import com.rflow.gateway.model.GatewayConfiguration;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface GatewayConfiguration extends JpaRepository<GatewayConfiguration, Long> {
-    
+@Repository
+public interface GatewayConfigurationRepository extends JpaRepository<GatewayConfiguration, Long> {
+
 }
