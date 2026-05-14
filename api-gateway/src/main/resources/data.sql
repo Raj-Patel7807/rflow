@@ -24,6 +24,9 @@ VALUES
     ('gateway.enable_request_logging', 'true', 'Enable request logging system', FALSE, 1),
     ('gateway.enable_rate_limiting', 'true', 'Enable API rate limiting', FALSE, 1);
 
+INSERT INTO gateway_configurations (id, config_key, config_value, description, is_sensitive, created_by)
+VALUES (4, 'gateway.enabled', true, 'Is Working', false, 1);
+
 INSERT INTO service_health_logs (service_id, health_status, response_time_ms)
 VALUES
     (1, 'UP', 20),

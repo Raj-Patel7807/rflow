@@ -1,15 +1,15 @@
 package com.rflow.gateway.repository;
 
-import com.rflow.gateway.model.Service;
+import com.rflow.gateway.model.BackendService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ServiceRepository extends JpaRepository<Service, Long> {
+public interface ServiceRepository extends JpaRepository<BackendService, Long> {
 
-    List<Service> findByStatus(String status);
+    List<BackendService> findByStatus(String status);
 
-    List<Service> findByTenantIdAndStatus(Long tenantId, String status);
+    List<BackendService> findByTenantIdAndStatus(Long tenantId, String status);
 }

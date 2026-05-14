@@ -1,5 +1,6 @@
 package com.rflow.gateway.service;
 
+import com.rflow.gateway.model.BackendService;
 import com.rflow.gateway.repository.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,10 @@ public class RouteService {
 
     private final ServiceRepository serviceRepository;
 
-    public com.rflow.gateway.model.Service findService(Long tenantId, String path) {
-        List<com.rflow.gateway.model.Service> services = serviceRepository.findByTenantIdAndStatus(tenantId, "ACTIVE");
+    public BackendService findService(Long tenantId, String path) {
+        List<BackendService> services = serviceRepository.findByTenantIdAndStatus(tenantId, "ACTIVE");
 
-        for(com.rflow.gateway.model.Service service : services) {
+        for(BackendService service : services) {
             if(path.startsWith(service.getRoutePrefix())) {
                 return service;
             }

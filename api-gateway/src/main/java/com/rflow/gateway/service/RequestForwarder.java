@@ -1,5 +1,6 @@
 package com.rflow.gateway.service;
 
+import com.rflow.gateway.model.BackendService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -18,7 +19,7 @@ public class RequestForwarder {
 
     private final RestTemplate restTemplate;
 
-    public ResponseEntity<?> forward(HttpServletRequest request, String body, com.rflow.gateway.model.Service service, String pathWithoutTenant) {
+    public ResponseEntity<?> forward(HttpServletRequest request, String body, BackendService service, String pathWithoutTenant) {
 
         String targetUrl = service.getTargetUrl() + pathWithoutTenant;
 
@@ -37,6 +38,13 @@ public class RequestForwarder {
 
         HttpEntity<String> entity = new HttpEntity<>(body, headers);
 
-        return restTemplate.exchange(targetUrl, method, entity, String.class);
+        try {
+
+            return restTemplate.exchange(targetUrl, method, entity, String.class);
+
+        } catch(Exception e) {
+
+            return ResponseEntity.status(502).body("Bad Gateway");
+        }
     }
 }

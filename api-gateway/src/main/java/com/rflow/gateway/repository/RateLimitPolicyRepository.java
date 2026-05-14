@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RateLimitPolicyRepository extends JpaRepository<RateLimitPolicy, Long> {
 
+    RateLimitPolicy findByServiceIdAndIsActive(Long serviceId, Boolean isActive);
 }

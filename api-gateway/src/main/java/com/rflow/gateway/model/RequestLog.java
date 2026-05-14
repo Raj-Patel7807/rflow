@@ -38,10 +38,10 @@ public class RequestLog {
     private String clientIp;
 
     @Column(name = "response_status")
-    private String responseStatus;
+    private Integer responseStatus;
 
     @Column(name = "response_time_ms")
-    private String responseTimeMs;
+    private Integer responseTimeMs;
 
     @Column(name = "user_agent")
     private String userAgent;
