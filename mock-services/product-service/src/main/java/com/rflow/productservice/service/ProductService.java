@@ -45,6 +45,16 @@ public class ProductService {
         return productRepository.save(oldProduct);
     }
 
+    public Product updateProductStock(Long id, Product product) {
+        Product oldProduct = productRepository.findById(id).orElseThrow(
+                () -> new ProductNotFoundException("Product Not Found with Id: " + id)
+        );
+
+        oldProduct.setStock(product.getStock());
+
+        return productRepository.save(oldProduct);
+    }
+
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
