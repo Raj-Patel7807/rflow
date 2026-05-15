@@ -2,7 +2,6 @@ package com.rflow.gateway.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.CustomLog;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

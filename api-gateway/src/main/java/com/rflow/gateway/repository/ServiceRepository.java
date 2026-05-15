@@ -11,7 +11,4 @@ public interface ServiceRepository extends JpaRepository<BackendService, Long> {
 
     List<BackendService> findByTenantIdAndStatus(Long tenantId, String status);
 
-    List<BackendService> findByTenantId(Long tenantId);
-
-    long countByTenantIdAndStatus(Long tenantId, String status);
 }

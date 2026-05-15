@@ -9,5 +9,4 @@ public interface TenantRepository extends JpaRepository<Tenant, Long> {
 
     Tenant findByTenantSlug(String TenantSlug);
 
-    long countByStatus(String status);
 }

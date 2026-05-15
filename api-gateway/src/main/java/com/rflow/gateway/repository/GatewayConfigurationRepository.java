@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface GatewayConfigurationRepository extends JpaRepository<GatewayConfiguration, Long> {
 
     GatewayConfiguration findByConfigKey(String configKey);
+
 }
