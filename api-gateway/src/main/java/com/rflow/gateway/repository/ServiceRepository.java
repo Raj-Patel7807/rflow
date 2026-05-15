@@ -9,7 +9,9 @@ import java.util.List;
 @Repository
 public interface ServiceRepository extends JpaRepository<BackendService, Long> {
 
-    List<BackendService> findByStatus(String status);
-
     List<BackendService> findByTenantIdAndStatus(Long tenantId, String status);
+
+    List<BackendService> findByTenantId(Long tenantId);
+
+    long countByTenantIdAndStatus(Long tenantId, String status);
 }

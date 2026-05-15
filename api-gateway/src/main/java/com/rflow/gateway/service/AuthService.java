@@ -19,7 +19,7 @@ public class AuthService {
     public LoginResponse login(LoginRequest loginRequest, HttpSession session) {
 
         User user = userRepository.findByEmail(loginRequest.getEmail());
-        
+
         if(user == null) {
             throw new RuntimeException("Invalid Email..");
         }
@@ -54,5 +54,24 @@ public class AuthService {
 
     public void logout(HttpSession session) {
         session.invalidate();
+    }
+
+    public LoginResponse currentUser(HttpSession session) {
+
+        Long userId = (Long) session.getAttribute("userId");
+
+        if(userId == null) {
+            throw new RuntimeException("Unauthorized");
+        }
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User Not Found"));
+
+        return LoginResponse.builder()
+                .userId(user.getId())
+                .tenantId(user.getTenantId())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
     }
 }

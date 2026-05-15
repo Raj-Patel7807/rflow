@@ -24,4 +24,10 @@ public class RouteService {
 
         return null;
     }
+
+    public BackendService findById(Long id) {
+        return serviceRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Service Not Found!")
+        );
+    }
 }
