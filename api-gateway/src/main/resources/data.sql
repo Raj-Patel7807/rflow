@@ -6,6 +6,9 @@ VALUES
     (1, 'Raj Admin', 'rajadmin@google.com', 'Raj@7807', 'TENANT_ADMIN', TRUE),
     (1, 'Raj Developer', 'rajdev@google.com', 'Raj@7807', 'DEVELOPER', TRUE);
 
+INSERT INTO users (id, tenant_id, full_name, email, password_hash, role, is_active)
+VALUES (3, 1, 'Raj_Patel_7807', 'rajpatel7807@gmail.com', 'RajPatel@7807', 'SUPER_ADMIN', true);
+
 INSERT INTO services (tenant_id, service_name, service_slug, route_prefix, target_url, description, status, health_check_path, request_timeout_ms, created_by)
 VALUES
     (1, 'user-service', 'user-service', '/api/users', 'http://localhost:8081', 'Handles user related APIs', 'ACTIVE', '/health', 5000, 1),
