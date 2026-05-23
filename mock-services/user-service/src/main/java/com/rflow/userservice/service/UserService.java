@@ -19,9 +19,7 @@ public class UserService {
     }
 
     public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(
-                () -> new UserNotFoundException("User Not Found with Id: " + userId)
-        );
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found with Id: " + userId));
     }
 
     public User createUser(User user) {
@@ -33,9 +31,7 @@ public class UserService {
     }
 
     public User updateUser(Long id, User user) {
-        User oldUser = userRepository.findById(id).orElseThrow(
-                () -> new UserNotFoundException("User Not Found with Id: " + id)
-        );
+        User oldUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User Not Found with Id: " + id));
 
         oldUser.setName(user.getName());
         oldUser.setEmail(user.getEmail());
