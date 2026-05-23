@@ -20,9 +20,7 @@ public class PaymentService {
     }
 
     public Payment getPaymentById(Long id) {
-        return paymentRepository.findById(id).orElseThrow(
-                () -> new PaymentNotFoundException("Payment Not Found with Id: " + id)
-        );
+        return paymentRepository.findById(id).orElseThrow(() -> new PaymentNotFoundException("Payment Not Found with Id: " + id));
     }
 
     public Payment createPayment(Payment payment) {
@@ -32,9 +30,7 @@ public class PaymentService {
     }
 
     public Payment updatePayment(Long id, Payment payment) {
-        Payment oldPayment = paymentRepository.findById(id).orElseThrow(
-                () -> new PaymentNotFoundException("Payment Not Found with Id: " + id)
-        );
+        Payment oldPayment = paymentRepository.findById(id).orElseThrow(() -> new PaymentNotFoundException("Payment Not Found with Id: " + id));
 
         oldPayment.setAmount(payment.getAmount());
         oldPayment.setStatus(payment.getStatus());
@@ -44,9 +40,7 @@ public class PaymentService {
     }
 
     public Payment updatePaymentStatus(Long id, Payment payment) {
-        Payment oldPayment = paymentRepository.findById(id).orElseThrow(
-                () -> new PaymentNotFoundException("Payment Not Found with Id: " + id)
-        );
+        Payment oldPayment = paymentRepository.findById(id).orElseThrow(() -> new PaymentNotFoundException("Payment Not Found with Id: " + id));
 
         oldPayment.setStatus(payment.getStatus());
 

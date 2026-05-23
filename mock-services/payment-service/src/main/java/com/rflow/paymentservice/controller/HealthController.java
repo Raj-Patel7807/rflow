@@ -18,7 +18,7 @@ public class HealthController {
 
     private final PaymentService paymentService;
 
-    private final long startTime =  System.currentTimeMillis();
+    private final long startTime = System.currentTimeMillis();
 
     @GetMapping
     public ResponseEntity<?> health() {
