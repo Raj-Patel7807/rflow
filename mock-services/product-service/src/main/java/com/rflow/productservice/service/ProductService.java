@@ -20,9 +20,7 @@ public class ProductService {
     }
 
     public Product getProductById(Long id) {
-        return productRepository.findById(id).orElseThrow(
-                () -> new ProductNotFoundException("Product Not Found with Id: " + id)
-        );
+        return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product Not Found with Id: " + id));
     }
 
     public Product createProduct(Product product) {
@@ -32,9 +30,7 @@ public class ProductService {
     }
 
     public Product updateProduct(Long id, Product product) {
-        Product oldProduct = productRepository.findById(id).orElseThrow(
-                () -> new ProductNotFoundException("Product Not Found with Id: " + id)
-        );
+        Product oldProduct = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product Not Found with Id: " + id));
 
         oldProduct.setName(product.getName());
         oldProduct.setCategory(product.getCategory());
@@ -46,9 +42,7 @@ public class ProductService {
     }
 
     public Product updateProductStock(Long id, Product product) {
-        Product oldProduct = productRepository.findById(id).orElseThrow(
-                () -> new ProductNotFoundException("Product Not Found with Id: " + id)
-        );
+        Product oldProduct = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product Not Found with Id: " + id));
 
         oldProduct.setStock(product.getStock());
 
