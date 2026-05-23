@@ -1,6 +1,9 @@
 package com.rflow.gateway.service;
 
-import com.rflow.gateway.model.*;
+import com.rflow.gateway.model.BackendService;
+import com.rflow.gateway.model.RateLimitPolicy;
+import com.rflow.gateway.model.RequestLog;
+import com.rflow.gateway.model.Tenant;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -90,7 +93,7 @@ public class GatewayService {
 
         long responseTime = System.currentTimeMillis() - start;
 
-        log.setResponseTimeMs((int)responseTime);
+        log.setResponseTimeMs((int) responseTime);
         log.setResponseStatus(response.getStatusCode().value());
 
         requestLogService.save(log);

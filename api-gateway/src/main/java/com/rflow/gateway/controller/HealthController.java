@@ -24,7 +24,7 @@ public class HealthController {
     private final RouteService routeService;
     private final TenantService tenantService;
 
-    private final long startTime =  System.currentTimeMillis();
+    private final long startTime = System.currentTimeMillis();
 
     @GetMapping
     public ResponseEntity<?> health() {

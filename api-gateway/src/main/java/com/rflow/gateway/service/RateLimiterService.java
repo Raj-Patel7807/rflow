@@ -22,9 +22,7 @@ public class RateLimiterService {
 
         List<Long> requests = requestTracker.get(key);
 
-        requests.removeIf(
-                time -> time < now - (windowSeconds * 1000L)
-        );
+        requests.removeIf(time -> time < now - (windowSeconds * 1000L));
 
         if(requests.size() >= maxRequests) {
             return false;
