@@ -14,4 +14,6 @@ public class CreateUserRequest {
     private String role;
 
     private Boolean isActive;
+
+    private Long tenantId;
 }

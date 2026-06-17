@@ -18,4 +18,8 @@ public class DashboardStatsResponse {
     private long activeTenants;
 
     private long rateLimitedRequests;
+
+    private long blockedRequests;
+
+    private double avgResponseTimeMs;
 }
