@@ -62,4 +62,36 @@ public class AuthorizationService {
 
         throw new RuntimeException("Forbidden");
     }
+
+    public Long resolveTenantId(HttpSession session) {
+
+        requireLogin(session);
+
+        String role = (String) session.getAttribute("role");
+
+        if("SUPER_ADMIN".equals(role)) {
+            Long selectedTenantId = (Long) session.getAttribute("selectedTenantId");
+
+            if(selectedTenantId == null) {
+                throw new RuntimeException("Select a tenant first");
+            }
+
+            return selectedTenantId;
+        }
+
+        return (Long) session.getAttribute("tenantId");
+    }
+
+    public Long resolveTenantIdOptional(HttpSession session) {
+
+        requireLogin(session);
+
+        String role = (String) session.getAttribute("role");
+
+        if("SUPER_ADMIN".equals(role)) {
+            return (Long) session.getAttribute("selectedTenantId");
+        }
+
+        return (Long) session.getAttribute("tenantId");
+    }
 }

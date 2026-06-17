@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/health")
+@RequestMapping({"/health", "/api/gateway/health"})
 @RequiredArgsConstructor
 public class HealthController {
 

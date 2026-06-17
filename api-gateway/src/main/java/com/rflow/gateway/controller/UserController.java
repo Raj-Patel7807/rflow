@@ -23,9 +23,10 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> create(@RequestBody CreateUserRequest request, HttpSession session) {
 
-        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
+        authorizationService.requireRole(session, "SUPER_ADMIN");
 
-        Long tenantId = (Long) session.getAttribute("tenantId");
+        Long tenantId = authorizationService.resolveTenantId(session);
+
         User user = userService.create(tenantId, request);
 
         return ResponseEntity.ok(user);
@@ -34,9 +35,9 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> getUsers(HttpSession session) {
 
-        authorizationService.requireLogin(session);
+        authorizationService.requireRole(session, "SUPER_ADMIN");
 
-        Long tenantId = (Long) session.getAttribute("tenantId");
+        Long tenantId = authorizationService.resolveTenantId(session);
 
         return ResponseEntity.ok(userService.getTenantUsers(tenantId));
     }
@@ -44,11 +45,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UpdateUserRequest request, HttpSession session) {
 
-        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
-
-        User user = userService.findById(id);
-
-        authorizationService.requireTenants(session, user.getTenantId());
+        authorizationService.requireRole(session, "SUPER_ADMIN");
 
         return ResponseEntity.ok(userService.update(id, request));
     }
@@ -56,11 +53,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id, HttpSession session) {
 
-        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
-
-        User user = userService.findById(id);
-
-        authorizationService.requireTenants(session, user.getTenantId());
+        authorizationService.requireRole(session, "SUPER_ADMIN");
 
         userService.delete(id);
 

@@ -41,6 +41,15 @@ public class RateLimitService {
         return rateLimitPolicyRepository.findByServiceId(serviceId);
     }
 
+    public List<RateLimitPolicy> getTenantPolicies(Long tenantId, List<Long> serviceIds) {
+
+        if(serviceIds.isEmpty()) {
+            return List.of();
+        }
+
+        return rateLimitPolicyRepository.findByServiceIdIn(serviceIds);
+    }
+
     public RateLimitPolicy findById(Long id) {
 
         return rateLimitPolicyRepository.findById(id).orElseThrow(() -> new RuntimeException("Policy Not Found"));

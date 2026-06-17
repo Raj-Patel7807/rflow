@@ -64,7 +64,30 @@ public class GatewayService {
 
         if(policy != null) {
 
-            String rateKey = tenant.getTenantSlug() + ":" + request.getRemoteAddr() + ":" + service.getId();
+            String rateKey;
+            String strategy = policy.getStrategy();
+            if("API_KEY".equalsIgnoreCase(strategy)) {
+                String apiKey = request.getHeader("X-API-Key");
+
+                if(apiKey == null || apiKey.trim().isEmpty()) {
+                    apiKey = request.getRemoteAddr();
+                }
+
+                rateKey = tenant.getTenantSlug() + ":apikey:" + apiKey + ":" + service.getId();
+            } else if("USER".equalsIgnoreCase(strategy)) {
+                String userId = request.getHeader("X-User-Id");
+
+                if(userId == null || userId.trim().isEmpty()) {
+                    userId = request.getHeader("Authorization");
+                    if(userId == null || userId.trim().isEmpty()) {
+                        userId = request.getRemoteAddr();
+                    }
+                }
+                
+                rateKey = tenant.getTenantSlug() + ":user:" + userId + ":" + service.getId();
+            } else {
+                rateKey = tenant.getTenantSlug() + ":ip:" + request.getRemoteAddr() + ":" + service.getId();
+            }
 
             boolean allowed = rateLimiterService.allowRequest(rateKey, policy.getRequestsLimit(), policy.getWindowSeconds());
 

@@ -12,5 +12,7 @@ public interface RateLimitPolicyRepository extends JpaRepository<RateLimitPolicy
     RateLimitPolicy findByServiceIdAndIsActive(Long serviceId, Boolean isActive);
 
     List<RateLimitPolicy> findByServiceId(Long serviceId);
-    
+
+    List<RateLimitPolicy> findByServiceIdIn(List<Long> serviceIds);
+
 }

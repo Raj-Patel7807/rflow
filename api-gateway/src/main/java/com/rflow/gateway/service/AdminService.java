@@ -22,9 +22,7 @@ public class AdminService {
 
     public BackendService getById(Long id) {
 
-        return serviceRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Service Not Found!")
-        );
+        return serviceRepository.findById(id).orElseThrow(() -> new RuntimeException("Service Not Found!"));
     }
 
     public ServiceResponse create(Long tenantId, Long createdBy, ServiceRequest request) {
@@ -72,17 +70,6 @@ public class AdminService {
 
     private ServiceResponse map(BackendService service) {
 
-        return ServiceResponse.builder()
-                .id(service.getId())
-                .tenantId(service.getTenantId())
-                .serviceName(service.getServiceName())
-                .serviceSlug(service.getServiceSlug())
-                .routePrefix(service.getRoutePrefix())
-                .targetUrl(service.getTargetUrl())
-                .description(service.getDescription())
-                .status(service.getStatus())
-                .healthCheckPath(service.getHealthCheckPath())
-                .requestTimeoutMs(service.getRequestTimeoutMs())
-                .build();
+        return ServiceResponse.builder().id(service.getId()).tenantId(service.getTenantId()).serviceName(service.getServiceName()).serviceSlug(service.getServiceSlug()).routePrefix(service.getRoutePrefix()).targetUrl(service.getTargetUrl()).description(service.getDescription()).status(service.getStatus()).healthCheckPath(service.getHealthCheckPath()).requestTimeoutMs(service.getRequestTimeoutMs()).build();
     }
 }

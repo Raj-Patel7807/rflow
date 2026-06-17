@@ -4,6 +4,7 @@ import com.rflow.gateway.dto.CreateRateLimitRequest;
 import com.rflow.gateway.dto.UpdateRateLimitRequest;
 import com.rflow.gateway.model.BackendService;
 import com.rflow.gateway.model.RateLimitPolicy;
+import com.rflow.gateway.repository.ServiceRepository;
 import com.rflow.gateway.service.AuthorizationService;
 import com.rflow.gateway.service.RateLimitService;
 import com.rflow.gateway.service.RouteService;
@@ -21,16 +22,25 @@ public class RateLimitController {
 
     private final RateLimitService rateLimitService;
     private final RouteService routeService;
+    private final ServiceRepository serviceRepository;
     private final AuthorizationService authorizationService;
+
+    @GetMapping
+    public ResponseEntity<List<RateLimitPolicy>> getAll(HttpSession session) {
+
+        authorizationService.requireRole(session, "SUPER_ADMIN");
+
+        Long tenantId = authorizationService.resolveTenantId(session);
+
+        List<Long> serviceIds = serviceRepository.findByTenantId(tenantId).stream().map(BackendService::getId).toList();
+
+        return ResponseEntity.ok(rateLimitService.getTenantPolicies(tenantId, serviceIds));
+    }
 
     @PostMapping
     public ResponseEntity<RateLimitPolicy> create(@RequestBody CreateRateLimitRequest request, HttpSession session) {
 
-        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
-
-        BackendService backendService = routeService.findById(request.getServiceId());
-
-        authorizationService.requireTenants(session, backendService.getTenantId());
+        authorizationService.requireRole(session, "SUPER_ADMIN");
 
         Long userId = (Long) session.getAttribute("userId");
 
@@ -40,11 +50,7 @@ public class RateLimitController {
     @GetMapping("/service/{serviceId}")
     public ResponseEntity<List<RateLimitPolicy>> getPolicies(@PathVariable Long serviceId, HttpSession session) {
 
-        authorizationService.requireLogin(session);
-
-        BackendService backendService = routeService.findById(serviceId);
-
-        authorizationService.requireTenants(session, backendService.getTenantId());
+        authorizationService.requireRole(session, "SUPER_ADMIN");
 
         return ResponseEntity.ok(rateLimitService.getServicePolicies(serviceId));
     }
@@ -52,13 +58,7 @@ public class RateLimitController {
     @PutMapping("/{id}")
     public ResponseEntity<RateLimitPolicy> update(@PathVariable Long id, @RequestBody UpdateRateLimitRequest request, HttpSession session) {
 
-        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
-
-        RateLimitPolicy policy = rateLimitService.findById(id);
-
-        BackendService backendService = routeService.findById(policy.getServiceId());
-
-        authorizationService.requireTenants(session, backendService.getTenantId());
+        authorizationService.requireRole(session, "SUPER_ADMIN");
 
         return ResponseEntity.ok(rateLimitService.update(id, request));
     }
@@ -66,13 +66,7 @@ public class RateLimitController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id, HttpSession session) {
 
-        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
-
-        RateLimitPolicy policy = rateLimitService.findById(id);
-
-        BackendService backendService = routeService.findById(policy.getServiceId());
-
-        authorizationService.requireTenants(session, backendService.getTenantId());
+        authorizationService.requireRole(session, "SUPER_ADMIN");
 
         rateLimitService.delete(id);
 
