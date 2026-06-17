@@ -2,10 +2,7 @@ import { useTenant } from "../context/TenantContext";
 
 export default function TenantRequired({ children }) {
     const { tenants, selectedTenant, selectTenant, loading } = useTenant();
-
-    if (loading) {
-        return <div className="page-loading">Loading tenant...</div>;
-    }
+    if (loading) { return <div className="page-loading">Loading tenant...</div>; }
 
     if (!selectedTenant) {
         return (
@@ -31,6 +28,5 @@ export default function TenantRequired({ children }) {
             </div>
         );
     }
-
     return children;
 }

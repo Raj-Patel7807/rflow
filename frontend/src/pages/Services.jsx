@@ -33,15 +33,10 @@ export default function Services() {
     function updateForm(field, value) {
         setForm((prev) => {
             const next = { ...prev, [field]: value };
-
             if (field === "serviceName" && !editingId) {
-                next.serviceSlug = value
-                    .toLowerCase()
-                    .trim()
-                    .replace(/\s+/g, "-")
-                    .replace(/[^a-z0-9-]/g, "");
+                next.serviceSlug = value.toLowerCase().trim()
+                    .replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
             }
-
             return next;
         });
     }
@@ -135,20 +130,11 @@ export default function Services() {
         setMessage(`Checking health for ${service.serviceName}...`);
 
         try {
-            const result = await api(
-                `/api/health-logs/check?serviceId=${service.id}`,
-                {
-                    method: "POST",
-                },
-            );
+            const result = await api(`/api/health-logs/check?serviceId=${service.id}`, {method: "POST",},);
             if (result.healthStatus === "UP") {
-                setMessage(
-                    `Service ${service.serviceName} is UP. Response time: ${result.responseTimeMs}ms.`,
-                );
+                setMessage(`Service ${service.serviceName} is UP. Response time: ${result.responseTimeMs}ms.`,);
             } else {
-                setError(
-                    `Service ${service.serviceName} is ${result.healthStatus}. Response time: ${result.responseTimeMs}ms.`,
-                );
+                setError(`Service ${service.serviceName} is ${result.healthStatus}. Response time: ${result.responseTimeMs}ms.`,);
             }
         } catch (err) {
             setError(`Failed to check service health: ${err.message}`);
@@ -159,9 +145,7 @@ export default function Services() {
         <div className="page">
             <header className="page-header">
                 <h2>Service Management</h2>
-                <p className="muted">
-                    Routes and backends for {selectedTenant?.tenantName}
-                </p>
+                <p className="muted">Routes and backends for {selectedTenant?.tenantName}</p>
             </header>
 
             {error && <div className="error-box">{error}</div>}
@@ -257,9 +241,7 @@ export default function Services() {
                                     <td>{service.routePrefix}</td>
                                     <td>{service.targetUrl}</td>
                                     <td>
-                                        <span
-                                            className={`pill ${service.status === "ACTIVE" ? "pill-green" : "pill-gray"}`}
-                                        >
+                                        <span className={`pill ${service.status === "ACTIVE" ? "pill-green" : "pill-gray"}`}>
                                             {service.status}
                                         </span>
                                     </td>
@@ -267,9 +249,7 @@ export default function Services() {
                                         <button
                                             type="button"
                                             className="btn-link"
-                                            onClick={() =>
-                                                checkServiceHealth(service)
-                                            }
+                                            onClick={() => checkServiceHealth(service)}
                                         >
                                             Check Health
                                         </button>
@@ -283,9 +263,7 @@ export default function Services() {
                                         <button
                                             type="button"
                                             className="btn-link"
-                                            onClick={() =>
-                                                toggleStatus(service)
-                                            }
+                                            onClick={() => toggleStatus(service)}
                                         >
                                             {service.status === "ACTIVE"
                                                 ? "Disable"
@@ -294,9 +272,7 @@ export default function Services() {
                                         <button
                                             type="button"
                                             className="btn-link danger"
-                                            onClick={() =>
-                                                deleteService(service.id)
-                                            }
+                                            onClick={() => deleteService(service.id)}
                                         >
                                             Delete
                                         </button>

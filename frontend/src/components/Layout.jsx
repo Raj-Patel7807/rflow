@@ -97,9 +97,7 @@ export default function Layout() {
                                 key={link.to}
                                 to={link.to}
                                 end={link.end}
-                                className={({ isActive }) =>
-                                    `nav-link ${isActive ? "active" : ""}`
-                                }
+                                className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
                             >
                                 {link.label}
                             </NavLink>

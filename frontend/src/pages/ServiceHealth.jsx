@@ -67,24 +67,15 @@ export default function ServiceHealth() {
         setError("");
         setMessage(`Checking health for ${service.serviceName}...`);
         try {
-            const result = await api(
-                `/api/health-logs/check?serviceId=${service.id}`,
-                { method: "POST" },
-            );
+            const result = await api(`/api/health-logs/check?serviceId=${service.id}`, { method: "POST" }, );
             if (result.healthStatus === "UP") {
-                setMessage(
-                    `Service ${service.serviceName} is UP. Response time: ${result.responseTimeMs}ms.`,
-                );
+                setMessage(`Service ${service.serviceName} is UP. Response time: ${result.responseTimeMs}ms.`, );
             } else {
-                setError(
-                    `Service ${service.serviceName} is ${result.healthStatus}. Response time: ${result.responseTimeMs}ms.`,
-                );
+                setError(`Service ${service.serviceName} is ${result.healthStatus}. Response time: ${result.responseTimeMs}ms.`, );
             }
             await loadHealthPage(0);
         } catch (err) {
-            setError(
-                `Health check failed for ${service.serviceName}: ${err.message}`,
-            );
+            setError(`Health check failed for ${service.serviceName}: ${err.message}`, );
         } finally {
             setCheckingServiceId(null);
         }
@@ -167,10 +158,7 @@ export default function ServiceHealth() {
                                                     service.id
                                                 }
                                             >
-                                                {checkingServiceId ===
-                                                service.id
-                                                    ? "Checking..."
-                                                    : "Check Status"}
+                                                {checkingServiceId === service.id ? "Checking..." : "Check Status"}
                                             </button>
                                         </td>
                                     </tr>
@@ -205,23 +193,16 @@ export default function ServiceHealth() {
                                 healthLogs.logs.map((log) => (
                                     <tr key={log.id}>
                                         <td>
-                                            {log.serviceName ||
-                                                `Service (ID: ${log.serviceId})`}
+                                            {log.serviceName || `Service (ID: ${log.serviceId})`}
                                         </td>
                                         <td>
-                                            <span
-                                                className={`pill ${log.healthStatus === "UP" ? "pill-green" : "pill-gray"}`}
-                                            >
+                                            <span className={`pill ${log.healthStatus === "UP" ? "pill-green" : "pill-gray"}`}>
                                                 {log.healthStatus}
                                             </span>
                                         </td>
                                         <td>{log.responseTimeMs ?? "-"} ms</td>
                                         <td>
-                                            {log.checkedAt
-                                                ? new Date(
-                                                      log.checkedAt,
-                                                  ).toLocaleString()
-                                                : "-"}
+                                            {log.checkedAt ? new Date(log.checkedAt,).toLocaleString() : "-"}
                                         </td>
                                     </tr>
                                 ))

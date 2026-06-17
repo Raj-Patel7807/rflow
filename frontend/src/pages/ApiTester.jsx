@@ -36,9 +36,7 @@ export default function ApiTester() {
 
             const options = { method, headers };
 
-            if (method !== "GET" && method !== "DELETE" && body.trim()) {
-                options.body = body;
-            }
+            if (method !== "GET" && method !== "DELETE" && body.trim()) { options.body = body; }
 
             const result = await gatewayRequest(
                 selectedTenant.tenantSlug,

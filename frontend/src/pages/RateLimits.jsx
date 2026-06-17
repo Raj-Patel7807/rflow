@@ -31,9 +31,7 @@ export default function RateLimits() {
     }, [selectedTenant?.id]);
 
     function getServiceName(serviceId) {
-        return (
-            services.find((s) => s.id === serviceId)?.serviceName || serviceId
-        );
+        return (services.find((s) => s.id === serviceId)?.serviceName || serviceId);
     }
 
     async function handleSubmit(event) {
@@ -77,7 +75,6 @@ export default function RateLimits() {
 
     async function deletePolicy(id) {
         if (!window.confirm("Delete this rate limit policy?")) return;
-
         try {
             await api(`/api/rate-limits/${id}`, { method: "DELETE" });
             setMessage("Policy deleted");
@@ -206,9 +203,7 @@ export default function RateLimits() {
                                             <span
                                                 className={`pill ${policy.isActive ? "pill-green" : "pill-gray"}`}
                                             >
-                                                {policy.isActive
-                                                    ? "Active"
-                                                    : "Inactive"}
+                                                {policy.isActive ? "Active" : "Inactive"}
                                             </span>
                                         </td>
                                         <td className="actions">
@@ -219,9 +214,7 @@ export default function RateLimits() {
                                                     togglePolicy(policy)
                                                 }
                                             >
-                                                {policy.isActive
-                                                    ? "Disable"
-                                                    : "Enable"}
+                                                {policy.isActive ? "Disable" : "Enable"}
                                             </button>
                                             <button
                                                 type="button"

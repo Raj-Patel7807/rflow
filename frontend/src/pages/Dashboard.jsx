@@ -25,46 +25,34 @@ export default function Dashboard() {
         setRecent([]);
         setChart([]);
 
-        api("/api/dashboard/system")
-            .then(setSystemStats)
+        api("/api/dashboard/system").then(setSystemStats)
             .catch((err) => setError(err.message));
     }, []);
 
     useEffect(() => {
         if (!selectedTenant) return;
-
         setError("");
-
         Promise.all([
             api("/api/dashboard/stats"),
             api("/api/dashboard/recent-requests?limit=10"),
             api("/api/dashboard/request-chart"),
-        ])
-            .then(([statsData, recentData, chartData]) => {
+        ]).then(([statsData, recentData, chartData]) => {
                 setStats(statsData);
                 setRecent(recentData);
                 setChart(chartData);
-            })
-            .catch((err) => setError(err.message));
+            }).catch((err) => setError(err.message));
     }, [selectedTenant]);
 
-    if (error) {
-        return <div className="error-box">{error}</div>;
-    }
+    if (error) { return <div className="error-box">{error}</div>; }
 
-    const maxChartValue = Math.max(
-        ...chart.map((row) => Number(row[1]) || 0),
-        1,
-    );
+    const maxChartValue = Math.max(...chart.map((row) => Number(row[1]) || 0), 1, );
 
     return (
         <div className="page">
             <header className="page-header">
                 <h2>Dashboard</h2>
                 <p className="muted">
-                    {selectedTenant
-                        ? `Overview for ${selectedTenant.tenantName}`
-                        : "System-wide overview — select a tenant for details"}
+                    {selectedTenant ? `Overview for ${selectedTenant.tenantName}` : "System-wide overview — select a tenant for details"}
                 </p>
             </header>
 
@@ -72,26 +60,11 @@ export default function Dashboard() {
                 <section className="panel">
                     <h3>System Overview</h3>
                     <div className="stat-grid">
-                        <StatCard
-                            label="Total Tenants"
-                            value={systemStats.totalTenants}
-                        />
-                        <StatCard
-                            label="Active Tenants"
-                            value={systemStats.activeTenants}
-                        />
-                        <StatCard
-                            label="Total Services"
-                            value={systemStats.totalServices}
-                        />
-                        <StatCard
-                            label="Total Users"
-                            value={systemStats.totalUsers}
-                        />
-                        <StatCard
-                            label="Total Requests"
-                            value={systemStats.totalRequests}
-                        />
+                        <StatCard label="Total Tenants" value={systemStats.totalTenants} />
+                        <StatCard label="Active Tenants" value={systemStats.activeTenants} />
+                        <StatCard label="Total Services" value={systemStats.totalServices} />
+                        <StatCard label="Total Users" value={systemStats.totalUsers} />
+                        <StatCard label="Total Requests" value={systemStats.totalRequests} />
                     </div>
                 </section>
             )}
@@ -101,22 +74,10 @@ export default function Dashboard() {
                     <section className="panel">
                         <h3>{selectedTenant.tenantName} Stats</h3>
                         <div className="stat-grid">
-                            <StatCard
-                                label="Total Requests"
-                                value={stats.totalRequests}
-                            />
-                            <StatCard
-                                label="Blocked Requests"
-                                value={stats.blockedRequests}
-                            />
-                            <StatCard
-                                label="Active Services"
-                                value={stats.activeServices}
-                            />
-                            <StatCard
-                                label="Avg Response Time"
-                                value={`${stats.avgResponseTimeMs} ms`}
-                            />
+                            <StatCard label="Total Requests" value={stats.totalRequests} />
+                            <StatCard label="Blocked Requests" value={stats.blockedRequests} />
+                            <StatCard label="Active Services" value={stats.activeServices} />
+                            <StatCard label="Avg Response Time" value={`${stats.avgResponseTimeMs} ms`} />
                         </div>
                     </section>
 

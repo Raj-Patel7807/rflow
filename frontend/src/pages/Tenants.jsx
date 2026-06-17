@@ -32,13 +32,9 @@ export default function Tenants() {
             const next = { ...prev, [field]: value };
 
             if (field === "tenantName" && !editingId) {
-                next.tenantSlug = value
-                    .toLowerCase()
-                    .trim()
-                    .replace(/\s+/g, "-")
-                    .replace(/[^a-z0-9-]/g, "");
+                next.tenantSlug = value.toLowerCase().trim()
+                    .replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
             }
-
             return next;
         });
     }
@@ -88,7 +84,6 @@ export default function Tenants() {
 
     async function deleteTenant(id) {
         if (!window.confirm("Delete this tenant and all its data?")) return;
-
         try {
             await api(`/api/tenant/${id}`, { method: "DELETE" });
             setMessage("Tenant deleted");
@@ -291,9 +286,7 @@ export default function Tenants() {
                                                 <button
                                                     type="button"
                                                     className="btn-link"
-                                                    onClick={() =>
-                                                        setEditingId(null)
-                                                    }
+                                                    onClick={() => setEditingId(null)}
                                                 >
                                                     Cancel
                                                 </button>
@@ -324,27 +317,21 @@ export default function Tenants() {
                                                 <button
                                                     type="button"
                                                     className="btn-link"
-                                                    onClick={() =>
-                                                        handleSelect(tenant)
-                                                    }
+                                                    onClick={() => handleSelect(tenant)}
                                                 >
                                                     Select
                                                 </button>
                                                 <button
                                                     type="button"
                                                     className="btn-link"
-                                                    onClick={() =>
-                                                        startEdit(tenant)
-                                                    }
+                                                    onClick={() => startEdit(tenant)}
                                                 >
                                                     Edit
                                                 </button>
                                                 <button
                                                     type="button"
                                                     className="btn-link danger"
-                                                    onClick={() =>
-                                                        deleteTenant(tenant.id)
-                                                    }
+                                                    onClick={() => deleteTenant(tenant.id)}
                                                 >
                                                     Delete
                                                 </button>

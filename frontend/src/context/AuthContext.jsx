@@ -8,15 +8,10 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        api("/api/auth/me")
-            .then((data) => {
-                if (data.role !== "SUPER_ADMIN") {
-                    setUser(null);
-                    return;
-                }
+        api("/api/auth/me").then((data) => {
+                if (data.role !== "SUPER_ADMIN") { setUser(null); return; }
                 setUser(data);
-            })
-            .catch(() => setUser(null))
+            }).catch(() => setUser(null))
             .finally(() => setLoading(false));
     }, []);
 
@@ -30,7 +25,6 @@ export function AuthProvider({ children }) {
             await api("/api/auth/logout", { method: "POST" }).catch(() => {});
             throw new Error("Only SUPER_ADMIN can access this portal");
         }
-
         setUser(data);
         return data;
     }
@@ -43,9 +37,7 @@ export function AuthProvider({ children }) {
     const isSuperAdmin = user?.role === "SUPER_ADMIN";
 
     return (
-        <AuthContext.Provider
-            value={{ user, loading, login, logout, isSuperAdmin }}
-        >
+        <AuthContext.Provider value={{ user, loading, login, logout, isSuperAdmin }}>
             {children}
         </AuthContext.Provider>
     );

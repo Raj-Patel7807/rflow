@@ -10,9 +10,7 @@ export default function Login() {
     const [error, setError] = useState("");
     const [submitting, setSubmitting] = useState(false);
 
-    if (!loading && user && isSuperAdmin) {
-        return <Navigate to="/" replace />;
-    }
+    if (!loading && user && isSuperAdmin) { return <Navigate to="/" replace />; }
 
     async function handleSubmit(event) {
         event.preventDefault();

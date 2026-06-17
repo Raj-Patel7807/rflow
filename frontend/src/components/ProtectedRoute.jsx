@@ -3,14 +3,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function ProtectedRoute({ children }) {
     const { user, loading, isSuperAdmin } = useAuth();
-
-    if (loading) {
-        return <div className="page-loading">Loading...</div>;
-    }
-
-    if (!user || !isSuperAdmin) {
-        return <Navigate to="/login" replace />;
-    }
-
+    if (loading) { return <div className="page-loading">Loading...</div>; }
+    if (!user || !isSuperAdmin) { return <Navigate to="/login" replace />; }
     return children;
 }

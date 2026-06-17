@@ -44,11 +44,7 @@ export default function GatewayHealth() {
         return `${mb.toFixed(1)} MB`;
     }
 
-    const memoryPercent = health?.memory
-        ? ((health.memory.usedMemory / health.memory.maxMemory) * 100).toFixed(
-              1,
-          )
-        : 0;
+    const memoryPercent = health?.memory ? ((health.memory.usedMemory / health.memory.maxMemory) * 100).toFixed(1,) : 0;
 
     return (
         <div className="page">

@@ -1,10 +1,4 @@
-export default function Pagination({
-    page,
-    totalPages,
-    totalElements,
-    size,
-    onPageChange,
-}) {
+export default function Pagination({page, totalPages, totalElements, size, onPageChange,}) {
     if (totalElements === 0) return null;
 
     const start = page * size + 1;

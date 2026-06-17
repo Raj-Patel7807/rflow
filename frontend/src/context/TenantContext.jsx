@@ -12,21 +12,16 @@ export function TenantProvider({ children }) {
 
     async function loadTenants() {
         const data = await api("/api/tenant/all");
-        setTenants(data);
-        return data;
+        setTenants(data); return data;
     }
 
     async function loadSelected() {
         const data = await api("/api/tenant/selected");
-        setSelectedTenant(data || null);
-        return data;
+        setSelectedTenant(data || null); return data;
     }
 
     useEffect(() => {
-        if (!isSuperAdmin) {
-            setLoading(false);
-            return;
-        }
+        if (!isSuperAdmin) { setLoading(false); return; }
 
         Promise.all([loadTenants(), loadSelected()])
             .catch(() => {})
@@ -36,8 +31,7 @@ export function TenantProvider({ children }) {
     async function selectTenant(tenantId) {
         if (!tenantId) {
             await api("/api/tenant/clear", { method: "POST" });
-            setSelectedTenant(null);
-            return;
+            setSelectedTenant(null); return;
         }
 
         const tenant = await api("/api/tenant/select", {
@@ -55,14 +49,7 @@ export function TenantProvider({ children }) {
 
     return (
         <TenantContext.Provider
-            value={{
-                tenants,
-                selectedTenant,
-                loading,
-                selectTenant,
-                refreshTenants,
-                loadTenants,
-            }}
+            value={{tenants, selectedTenant, loading, selectTenant, refreshTenants, loadTenants,}}
         >
             {children}
         </TenantContext.Provider>
