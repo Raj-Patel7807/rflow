@@ -43,7 +43,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UpdateUserRequest request, HttpSession session) {
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UpdateUserRequest request,
+                                       HttpSession session) {
 
         authorizationService.requireRole(session, "SUPER_ADMIN");
 

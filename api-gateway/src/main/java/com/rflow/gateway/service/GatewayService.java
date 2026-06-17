@@ -28,7 +28,8 @@ public class GatewayService {
     public ResponseEntity<?> process(String tenantSlug, HttpServletRequest request, String body) {
 
         if(!gatewayConfigurationService.isEnabled("gateway.enabled")) {
-            return ResponseEntity.status(503).body("Gateway Disabled");
+            return ResponseEntity.status(503)
+                                 .body("Gateway Disabled");
         }
 
         long start = System.currentTimeMillis();
@@ -38,7 +39,8 @@ public class GatewayService {
         Tenant tenant = tenantService.findBySlug(tenantSlug);
 
         if(tenant == null || !"ACTIVE".equals(tenant.getStatus())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid Tenant: " + tenantSlug);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                 .body("Invalid Tenant: " + tenantSlug);
         }
 
         String pathWithoutTenant = normalize(removeTenant(path, tenantSlug));
@@ -46,7 +48,8 @@ public class GatewayService {
         BackendService service = routeService.findService(tenant.getId(), pathWithoutTenant);
 
         if(service == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Service for Path: " + pathWithoutTenant);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                 .body("No Service for Path: " + pathWithoutTenant);
         }
 
         RequestLog log = new RequestLog();
@@ -69,7 +72,8 @@ public class GatewayService {
             if("API_KEY".equalsIgnoreCase(strategy)) {
                 String apiKey = request.getHeader("X-API-Key");
 
-                if(apiKey == null || apiKey.trim().isEmpty()) {
+                if(apiKey == null || apiKey.trim()
+                                           .isEmpty()) {
                     apiKey = request.getRemoteAddr();
                 }
 
@@ -77,19 +81,22 @@ public class GatewayService {
             } else if("USER".equalsIgnoreCase(strategy)) {
                 String userId = request.getHeader("X-User-Id");
 
-                if(userId == null || userId.trim().isEmpty()) {
+                if(userId == null || userId.trim()
+                                           .isEmpty()) {
                     userId = request.getHeader("Authorization");
-                    if(userId == null || userId.trim().isEmpty()) {
+                    if(userId == null || userId.trim()
+                                               .isEmpty()) {
                         userId = request.getRemoteAddr();
                     }
                 }
-                
+
                 rateKey = tenant.getTenantSlug() + ":user:" + userId + ":" + service.getId();
             } else {
                 rateKey = tenant.getTenantSlug() + ":ip:" + request.getRemoteAddr() + ":" + service.getId();
             }
 
-            boolean allowed = rateLimiterService.allowRequest(rateKey, policy.getRequestsLimit(), policy.getWindowSeconds());
+            boolean allowed = rateLimiterService.allowRequest(rateKey, policy.getRequestsLimit(),
+                                                              policy.getWindowSeconds());
 
             if(!allowed) {
                 log.setResponseStatus(429);
@@ -97,7 +104,8 @@ public class GatewayService {
                 log.setErrorMessage("Rate Limit Exceeded");
                 requestLogService.save(log);
 
-                return ResponseEntity.status(429).body("Too Many Requests");
+                return ResponseEntity.status(429)
+                                     .body("Too Many Requests");
             }
         }
 
@@ -109,7 +117,8 @@ public class GatewayService {
             log.setErrorMessage("Service Unavailable");
             requestLogService.save(log);
 
-            return ResponseEntity.status(503).body("Service Unavailable");
+            return ResponseEntity.status(503)
+                                 .body("Service Unavailable");
         }
 
         ResponseEntity<?> response = requestForwarder.forward(request, body, service, pathWithoutTenant);
@@ -117,7 +126,8 @@ public class GatewayService {
         long responseTime = System.currentTimeMillis() - start;
 
         log.setResponseTimeMs((int) responseTime);
-        log.setResponseStatus(response.getStatusCode().value());
+        log.setResponseStatus(response.getStatusCode()
+                                      .value());
 
         requestLogService.save(log);
 
@@ -129,7 +139,9 @@ public class GatewayService {
     }
 
     private String normalize(String path) {
-        if(path == null) return "/";
+        if(path == null) {
+            return "/";
+        }
         if(path.length() > 1 && path.endsWith("/")) {
             return path.substring(0, path.length() - 1);
         }

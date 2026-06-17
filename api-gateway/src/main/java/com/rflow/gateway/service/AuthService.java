@@ -32,7 +32,8 @@ public class AuthService {
         }
 
         // We can use BCrypt here...
-        boolean matches = loginRequest.getPassword().equals(user.getPasswordHash());
+        boolean matches = loginRequest.getPassword()
+                                      .equals(user.getPasswordHash());
 
         if(!matches) {
             throw new RuntimeException("Invalid Password");
@@ -50,11 +51,20 @@ public class AuthService {
 
         userRepository.save(user);
 
-        Tenant tenant = tenantRepository.findById(user.getTenantId()).orElse(null);
+        Tenant tenant = tenantRepository.findById(user.getTenantId())
+                                        .orElse(null);
         String tenantSlug = tenant != null ? tenant.getTenantSlug() : null;
         String tenantName = tenant != null ? tenant.getTenantName() : null;
 
-        return LoginResponse.builder().userId(user.getId()).tenantId(user.getTenantId()).fullName(user.getFullName()).email(user.getEmail()).role(user.getRole()).tenantSlug(tenantSlug).tenantName(tenantName).build();
+        return LoginResponse.builder()
+                            .userId(user.getId())
+                            .tenantId(user.getTenantId())
+                            .fullName(user.getFullName())
+                            .email(user.getEmail())
+                            .role(user.getRole())
+                            .tenantSlug(tenantSlug)
+                            .tenantName(tenantName)
+                            .build();
     }
 
     public void logout(HttpSession session) {
@@ -69,16 +79,26 @@ public class AuthService {
             throw new RuntimeException("Unauthorized");
         }
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User Not Found"));
+        User user = userRepository.findById(userId)
+                                  .orElseThrow(() -> new RuntimeException("User Not Found"));
 
         if(!"SUPER_ADMIN".equals(user.getRole())) {
             throw new RuntimeException("Forbidden");
         }
 
-        Tenant tenant = tenantRepository.findById(user.getTenantId()).orElse(null);
+        Tenant tenant = tenantRepository.findById(user.getTenantId())
+                                        .orElse(null);
         String tenantSlug = tenant != null ? tenant.getTenantSlug() : null;
         String tenantName = tenant != null ? tenant.getTenantName() : null;
 
-        return LoginResponse.builder().userId(user.getId()).tenantId(user.getTenantId()).fullName(user.getFullName()).email(user.getEmail()).role(user.getRole()).tenantSlug(tenantSlug).tenantName(tenantName).build();
+        return LoginResponse.builder()
+                            .userId(user.getId())
+                            .tenantId(user.getTenantId())
+                            .fullName(user.getFullName())
+                            .email(user.getEmail())
+                            .role(user.getRole())
+                            .tenantSlug(tenantSlug)
+                            .tenantName(tenantName)
+                            .build();
     }
 }

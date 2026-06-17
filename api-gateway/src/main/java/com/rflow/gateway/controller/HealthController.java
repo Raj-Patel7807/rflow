@@ -40,7 +40,8 @@ public class HealthController {
         // uptime
         long uptimeMs = System.currentTimeMillis() - startTime;
         response.put("uptimeMs", uptimeMs);
-        response.put("timestamp", Instant.now().toString());
+        response.put("timestamp", Instant.now()
+                                         .toString());
 
         // dependency checks (real)
         dependencies.put("gatewayService", gatewayService != null ? "UP" : "DOWN");

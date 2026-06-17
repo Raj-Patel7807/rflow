@@ -17,7 +17,8 @@ public class GatewayController {
     private final GatewayService gatewayService;
 
     @RequestMapping
-    public ResponseEntity<?> handle(@PathVariable String tenant, HttpServletRequest request, @RequestBody(required = false) String body) {
+    public ResponseEntity<?> handle(@PathVariable String tenant, HttpServletRequest request,
+                                    @RequestBody(required = false) String body) {
         return gatewayService.process(tenant, request, body);
     }
 }

@@ -19,7 +19,8 @@ public class RequestForwarder {
 
     private final RestTemplate restTemplate;
 
-    public ResponseEntity<?> forward(HttpServletRequest request, String body, BackendService service, String pathWithoutTenant) {
+    public ResponseEntity<?> forward(HttpServletRequest request, String body, BackendService service,
+                                     String pathWithoutTenant) {
 
         String targetUrl = service.getTargetUrl() + pathWithoutTenant;
 
@@ -44,7 +45,8 @@ public class RequestForwarder {
 
         } catch(Exception e) {
 
-            return ResponseEntity.status(502).body("Bad Gateway");
+            return ResponseEntity.status(502)
+                                 .body("Bad Gateway");
         }
     }
 }

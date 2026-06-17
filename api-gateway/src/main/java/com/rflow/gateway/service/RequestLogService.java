@@ -41,7 +41,15 @@ public class RequestLogService {
 
         Map<Long, String> serviceNames = loadServiceNames(tenantId);
 
-        return PagedLogResponse.builder().logs(logs.stream().map(log -> map(log, serviceNames)).toList()).page(page).size(size).totalElements(total).totalPages(size == 0 ? 0 : (int) Math.ceil((double) total / size)).build();
+        return PagedLogResponse.builder()
+                               .logs(logs.stream()
+                                         .map(log -> map(log, serviceNames))
+                                         .toList())
+                               .page(page)
+                               .size(size)
+                               .totalElements(total)
+                               .totalPages(size == 0 ? 0 : (int) Math.ceil((double) total / size))
+                               .build();
     }
 
     public List<RequestLogResponse> getRecent(Long tenantId, int limit) {
@@ -60,6 +68,20 @@ public class RequestLogService {
     }
 
     private RequestLogResponse map(RequestLog log, Map<Long, String> serviceNames) {
-        return RequestLogResponse.builder().id(log.getId()).tenantId(log.getTenantId()).serviceId(log.getServiceId()).serviceName(serviceNames.get(log.getServiceId())).requestMethod(log.getRequestMethod()).requestPath(log.getRequestPath()).queryString(log.getQueryString()).clientIp(log.getClientIp()).responseStatus(log.getResponseStatus()).responseTimeMs(log.getResponseTimeMs()).userAgent(log.getUserAgent()).errorMessage(log.getErrorMessage()).createdAt(log.getCreatedAt()).build();
+        return RequestLogResponse.builder()
+                                 .id(log.getId())
+                                 .tenantId(log.getTenantId())
+                                 .serviceId(log.getServiceId())
+                                 .serviceName(serviceNames.get(log.getServiceId()))
+                                 .requestMethod(log.getRequestMethod())
+                                 .requestPath(log.getRequestPath())
+                                 .queryString(log.getQueryString())
+                                 .clientIp(log.getClientIp())
+                                 .responseStatus(log.getResponseStatus())
+                                 .responseTimeMs(log.getResponseTimeMs())
+                                 .userAgent(log.getUserAgent())
+                                 .errorMessage(log.getErrorMessage())
+                                 .createdAt(log.getCreatedAt())
+                                 .build();
     }
 }

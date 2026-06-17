@@ -32,7 +32,10 @@ public class RateLimitController {
 
         Long tenantId = authorizationService.resolveTenantId(session);
 
-        List<Long> serviceIds = serviceRepository.findByTenantId(tenantId).stream().map(BackendService::getId).toList();
+        List<Long> serviceIds = serviceRepository.findByTenantId(tenantId)
+                                                 .stream()
+                                                 .map(BackendService::getId)
+                                                 .toList();
 
         return ResponseEntity.ok(rateLimitService.getTenantPolicies(tenantId, serviceIds));
     }
@@ -56,7 +59,8 @@ public class RateLimitController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RateLimitPolicy> update(@PathVariable Long id, @RequestBody UpdateRateLimitRequest request, HttpSession session) {
+    public ResponseEntity<RateLimitPolicy> update(@PathVariable Long id, @RequestBody UpdateRateLimitRequest request,
+                                                  HttpSession session) {
 
         authorizationService.requireRole(session, "SUPER_ADMIN");
 

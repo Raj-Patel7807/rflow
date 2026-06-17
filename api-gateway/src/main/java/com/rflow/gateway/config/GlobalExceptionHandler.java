@@ -16,13 +16,16 @@ public class GlobalExceptionHandler {
         String message = ex.getMessage();
 
         if("Unauthorized".equals(message)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", message));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                                 .body(Map.of("error", message));
         }
 
         if("Forbidden".equals(message)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", message));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                 .body(Map.of("error", message));
         }
 
-        return ResponseEntity.badRequest().body(Map.of("error", message));
+        return ResponseEntity.badRequest()
+                             .body(Map.of("error", message));
     }
 }

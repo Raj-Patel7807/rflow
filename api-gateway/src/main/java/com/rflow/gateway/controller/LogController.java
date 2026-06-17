@@ -20,7 +20,10 @@ public class LogController {
     private final RequestLogService requestLogService;
 
     @GetMapping
-    public ResponseEntity<PagedLogResponse> getLogs(HttpSession session, @RequestParam(required = false) String method, @RequestParam(required = false) Integer status, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+    public ResponseEntity<PagedLogResponse> getLogs(HttpSession session, @RequestParam(required = false) String method,
+                                                    @RequestParam(required = false) Integer status,
+                                                    @RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "20") int size) {
 
         authorizationService.requireRole(session, "SUPER_ADMIN");
 

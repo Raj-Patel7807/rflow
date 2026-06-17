@@ -16,7 +16,8 @@ public class HealthCheckService {
 
             ResponseEntity<String> response = restTemplate.getForEntity(targetUrl + healthPath, String.class);
 
-            return response.getStatusCode().is2xxSuccessful();
+            return response.getStatusCode()
+                           .is2xxSuccessful();
 
         } catch(Exception e) {
 

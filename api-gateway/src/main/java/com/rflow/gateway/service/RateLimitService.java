@@ -52,7 +52,8 @@ public class RateLimitService {
 
     public RateLimitPolicy findById(Long id) {
 
-        return rateLimitPolicyRepository.findById(id).orElseThrow(() -> new RuntimeException("Policy Not Found"));
+        return rateLimitPolicyRepository.findById(id)
+                                        .orElseThrow(() -> new RuntimeException("Policy Not Found"));
     }
 
     public RateLimitPolicy update(Long id, UpdateRateLimitRequest request) {

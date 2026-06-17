@@ -80,7 +80,8 @@ public class DashboardController {
     }
 
     @GetMapping("/recent-requests")
-    public ResponseEntity<List<RequestLogResponse>> recentRequests(HttpSession session, @RequestParam(defaultValue = "10") int limit) {
+    public ResponseEntity<List<RequestLogResponse>> recentRequests(HttpSession session,
+                                                                   @RequestParam(defaultValue = "10") int limit) {
 
         authorizationService.requireRole(session, "SUPER_ADMIN");
 

@@ -24,7 +24,13 @@ public class DashboardService {
 
     public SystemStatsResponse systemStats() {
 
-        return SystemStatsResponse.builder().totalTenants(tenantRepository.count()).activeTenants(tenantRepository.countByStatus("ACTIVE")).totalServices(serviceRepository.count()).totalUsers(userRepository.count()).totalRequests(requestLogRepository.count()).build();
+        return SystemStatsResponse.builder()
+                                  .totalTenants(tenantRepository.count())
+                                  .activeTenants(tenantRepository.countByStatus("ACTIVE"))
+                                  .totalServices(serviceRepository.count())
+                                  .totalUsers(userRepository.count())
+                                  .totalRequests(requestLogRepository.count())
+                                  .build();
     }
 
     public DashboardStatsResponse stats(Long tenantId) {
@@ -43,7 +49,16 @@ public class DashboardService {
 
         Double avgResponse = requestLogRepository.avgResponseTime(tenantId);
 
-        return DashboardStatsResponse.builder().totalRequests(total).successRequests(success).failedRequests(failed).activeServices(activeServices).activeTenants(activeTenants).rateLimitedRequests(rateLimited).blockedRequests(rateLimited).avgResponseTimeMs(avgResponse == null ? 0 : Math.round(avgResponse * 10.0) / 10.0).build();
+        return DashboardStatsResponse.builder()
+                                     .totalRequests(total)
+                                     .successRequests(success)
+                                     .failedRequests(failed)
+                                     .activeServices(activeServices)
+                                     .activeTenants(activeTenants)
+                                     .rateLimitedRequests(rateLimited)
+                                     .blockedRequests(rateLimited)
+                                     .avgResponseTimeMs(avgResponse == null ? 0 : Math.round(avgResponse * 10.0) / 10.0)
+                                     .build();
     }
 
     public List<RequestLogResponse> recentRequests(Long tenantId, int limit) {

@@ -27,7 +27,10 @@ public class TenantController {
 
         authorizationService.requireRole(session, "SUPER_ADMIN");
 
-        return ResponseEntity.ok(tenantService.getAll().stream().map(tenantService::map).toList());
+        return ResponseEntity.ok(tenantService.getAll()
+                                              .stream()
+                                              .map(tenantService::map)
+                                              .toList());
     }
 
     @PostMapping
@@ -39,7 +42,8 @@ public class TenantController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TenantResponse> update(@PathVariable Long id, @RequestBody UpdateTenantRequest request, HttpSession session) {
+    public ResponseEntity<TenantResponse> update(@PathVariable Long id, @RequestBody UpdateTenantRequest request,
+                                                 HttpSession session) {
 
         authorizationService.requireRole(session, "SUPER_ADMIN");
 

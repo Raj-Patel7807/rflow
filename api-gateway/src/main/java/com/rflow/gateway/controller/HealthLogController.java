@@ -17,7 +17,10 @@ public class HealthLogController {
     private final HealthLogService healthLogService;
 
     @GetMapping
-    public ResponseEntity<PagedHealthLogResponse> getLogs(HttpSession session, @RequestParam(required = false) Long serviceId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
+    public ResponseEntity<PagedHealthLogResponse> getLogs(HttpSession session,
+                                                          @RequestParam(required = false) Long serviceId,
+                                                          @RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "20") int size) {
 
         authorizationService.requireRole(session, "SUPER_ADMIN");
 

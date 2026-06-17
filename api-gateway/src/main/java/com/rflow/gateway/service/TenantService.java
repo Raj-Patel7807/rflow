@@ -25,7 +25,8 @@ public class TenantService {
     }
 
     public Tenant findById(Long id) {
-        return tenantRepository.findById(id).orElseThrow(() -> new RuntimeException("Tenant Not Found"));
+        return tenantRepository.findById(id)
+                               .orElseThrow(() -> new RuntimeException("Tenant Not Found"));
     }
 
     public List<Tenant> getAll() {
@@ -47,9 +48,13 @@ public class TenantService {
 
         User owner = new User();
         owner.setTenantId(savedTenant.getId());
-        owner.setFullName(request.getOwnerName() != null && !request.getOwnerName().isBlank() ? request.getOwnerName() : (savedTenant.getTenantName() + " Owner"));
+        owner.setFullName(request.getOwnerName() != null && !request.getOwnerName()
+                                                                    .isBlank() ? request.getOwnerName() :
+                          (savedTenant.getTenantName() + " Owner"));
         owner.setEmail(savedTenant.getOwnerEmail());
-        owner.setPasswordHash(request.getOwnerPassword() != null && !request.getOwnerPassword().isBlank() ? request.getOwnerPassword() : "admin123");
+        owner.setPasswordHash(request.getOwnerPassword() != null && !request.getOwnerPassword()
+                                                                            .isBlank() ? request.getOwnerPassword() :
+                              "admin123");
         owner.setRole("TENANT_ADMIN");
         owner.setIsActive(true);
         owner.setCreatedAt(LocalDateTime.now());
@@ -76,6 +81,12 @@ public class TenantService {
     }
 
     public TenantResponse map(Tenant tenant) {
-        return TenantResponse.builder().id(tenant.getId()).tenantName(tenant.getTenantName()).tenantSlug(tenant.getTenantSlug()).ownerEmail(tenant.getOwnerEmail()).status(tenant.getStatus()).build();
+        return TenantResponse.builder()
+                             .id(tenant.getId())
+                             .tenantName(tenant.getTenantName())
+                             .tenantSlug(tenant.getTenantSlug())
+                             .ownerEmail(tenant.getOwnerEmail())
+                             .status(tenant.getStatus())
+                             .build();
     }
 }

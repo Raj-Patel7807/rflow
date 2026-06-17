@@ -29,7 +29,9 @@ public class GatewayConfigController {
     }
 
     @PutMapping("/{key}")
-    public ResponseEntity<GatewayConfiguration> update(@PathVariable String key, @RequestBody UpdateGatewayConfigRequest request, HttpSession session) {
+    public ResponseEntity<GatewayConfiguration> update(@PathVariable String key,
+                                                       @RequestBody UpdateGatewayConfigRequest request,
+                                                       HttpSession session) {
 
         authorizationService.requireRole(session, "SUPER_ADMIN");
 
