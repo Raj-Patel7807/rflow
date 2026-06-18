@@ -30,7 +30,7 @@ export async function gatewayRequest(tenantSlug, path, options = {}) {
 
     if (options.body && !headers["Content-Type"]) { headers["Content-Type"] = "application/json"; }
 
-    const response = await fetch(url, { ...options, headers, });
+    const response = await fetch(url, { ...options, credentials: "include", headers, });
     const elapsed = Math.round(performance.now() - start);
     const text = await response.text();
 
