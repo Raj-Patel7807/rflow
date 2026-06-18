@@ -1,16 +1,72 @@
-# React + Vite
+# RFlow Admin Dashboard 📊
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The RFlow Admin Dashboard is a lightweight, responsive developer and admin interface built with **React** and **Vite**. It provides a unified control panel to monitor, configure, and manage the [RFlow API Gateway](file:///d:/Code_PlayGround/rflow/README.md).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features ✨
 
-## React Compiler
+- **System & Tenant Dashboards**: View overall system stats (total tenants, services, users, requests) or drill down into a specific tenant's request volume, blocked requests, and average response times.
+- **Tenant Management**: Seamlessly register, update, and manage multi-tenant configurations.
+- **Service Routing**: Dynamically manage backend service configurations and gateway routes.
+- **Health Monitoring**: Check live status and uptime for both the API Gateway and downstream services (User, Product, and Payment services).
+- **Rate Limit Policies**: Set, update, and attach rate limiting rules to tenant routes.
+- **Interactive API Tester**: Send live HTTP requests to the gateway and inspect response headers, status codes, and payloads directly.
+- **Request Log Explorer**: Scan through request histories, response codes (colored by status class), and request times.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Tech Stack 🛠️
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React 19** – Component-based UI library
+- **Vite** – Fast build tool and development server
+- **React Router 7** – Client-side routing
+- **Vanilla CSS** – Modern CSS layout and custom theme tokens
+
+---
+
+## Getting Started 🚀
+
+### 1. Setup Environment Variables
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Ensure the API Gateway target matches your running RFlow instance:
+
+```env
+VITE_API_URL=http://localhost:8080
+```
+
+### 2. Install Dependencies
+
+Install all package dependencies using npm:
+
+```bash
+npm install
+```
+
+### 3. Run Development Server
+
+Launch the local development server:
+
+```bash
+npm run dev
+```
+
+The application will run at [http://localhost:5173](http://localhost:5173).
+
+---
+
+## Production Build
+
+To generate the optimized production assets:
+
+```bash
+npm run build
+```
+
+The output will be created inside the `dist/` directory, ready to be served by any static host.
