@@ -3,7 +3,6 @@ package com.rflow.gateway.controller;
 import com.rflow.gateway.dto.ServiceRequest;
 import com.rflow.gateway.service.AdminService;
 import com.rflow.gateway.service.AuthorizationService;
-import com.rflow.gateway.service.RouteService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ public class ServiceController {
 
     private final AuthorizationService authorizationService;
     private final AdminService adminService;
-    private final RouteService routeService;
 
     @GetMapping
     public ResponseEntity<?> getAll(HttpSession session) {

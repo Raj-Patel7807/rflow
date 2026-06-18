@@ -7,7 +7,6 @@ import com.rflow.gateway.model.RateLimitPolicy;
 import com.rflow.gateway.repository.ServiceRepository;
 import com.rflow.gateway.service.AuthorizationService;
 import com.rflow.gateway.service.RateLimitService;
-import com.rflow.gateway.service.RouteService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ import java.util.List;
 public class RateLimitController {
 
     private final RateLimitService rateLimitService;
-    private final RouteService routeService;
     private final ServiceRepository serviceRepository;
     private final AuthorizationService authorizationService;
 
