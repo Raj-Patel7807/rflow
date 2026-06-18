@@ -19,6 +19,7 @@ Built to understand backend architecture, API traffic management, and microservi
 - Multi-tenant architecture
 - Configurable gateway services
 - Mock microservices for testing
+- Admin Dashboard (React + Vite)
 
 ---
 
@@ -39,6 +40,7 @@ Backend Services
 
 ## Tech Stack 🛠️
 
+**Gateway & Backend:**
 - Java
 - Spring Boot
 - PostgreSQL
@@ -46,19 +48,23 @@ Backend Services
 - Maven
 - REST APIs
 
+**Frontend Dashboard:**
+- React (v19)
+- Vite
+- Vanilla CSS (Modern layouts & variables)
+
 ---
 
 ## Repository Structure 📁
 
 ```text
 rflow/
-├── api-gateway/
-│
-├── mock-services/
+├── api-gateway/        → Spring Boot API Gateway
+├── frontend/           → React & Vite Admin Dashboard
+├── mock-services/      → Downstream mock services (User, Product, Payment)
 │   ├── user-service/
 │   ├── product-service/
 │   └── payment-service/
-│
 └── README.md
 ```
 
@@ -203,6 +209,20 @@ cd mock-services/payment-service
 
 ---
 
+### Start Frontend Dashboard
+
+Ensure you have [Node.js](https://nodejs.org/) installed.
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend dashboard will run locally at [http://localhost:5173](http://localhost:5173). Connect it to your API gateway (default `http://localhost:8080`) by configuring the `VITE_API_URL` environment variable in `frontend/.env`.
+
+---
+
 ## Sample Requests 📬
 
 ```http
@@ -215,14 +235,12 @@ POST /api/payments
 
 ## Future Improvements 🚧
 
-- Admin Dashboard
 - JWT Authentication
 - Redis-based Rate Limiting
 - Docker Support
 - Service Discovery
 - Load Balancing
 - API Analytics
-- Real-time Monitoring
 
 ---
 
