@@ -47,6 +47,7 @@ Backend Services
 - Spring Data JPA
 - Maven
 - REST APIs
+- Docker (Containerization)
 
 **Frontend Dashboard:**
 - React (v19)
@@ -175,9 +176,19 @@ application.yaml
 
 ### Start API Gateway
 
+**Using Maven:**
+
 ```bash
 cd api-gateway
 ./mvnw spring-boot:run
+```
+
+**Using Docker:**
+
+```bash
+cd api-gateway
+docker build -t api-gateway .
+docker run -p 8080:8080 api-gateway
 ```
 
 ---
@@ -237,7 +248,7 @@ POST /api/payments
 
 - JWT Authentication
 - Redis-based Rate Limiting
-- Docker Support
+- Docker Compose for orchestrating all services (Gateway, Frontend, and Mock Services)
 - Service Discovery
 - Load Balancing
 - API Analytics
