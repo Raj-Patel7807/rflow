@@ -7,6 +7,7 @@ import com.rflow.gateway.repository.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -40,6 +41,7 @@ public class AdminService {
         service.setHealthCheckPath(request.getHealthCheckPath());
         service.setRequestTimeoutMs(request.getRequestTimeoutMs());
         service.setCreatedBy(createdBy);
+        service.setCreatedAt(LocalDateTime.now());
 
         BackendService saved = serviceRepository.save(service);
 
@@ -58,6 +60,7 @@ public class AdminService {
         service.setStatus(request.getStatus());
         service.setHealthCheckPath(request.getHealthCheckPath());
         service.setRequestTimeoutMs(request.getRequestTimeoutMs());
+        service.setUpdatedAt(LocalDateTime.now());
 
         BackendService updated = serviceRepository.save(service);
 
