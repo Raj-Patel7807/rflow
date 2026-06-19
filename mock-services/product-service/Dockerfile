@@ -1,4 +1,18 @@
-FROM ubuntu:latest
-LABEL authors="Raj"
+FROM eclipse-temurin:21-jdk AS build
 
-ENTRYPOINT ["top", "-b"]
+WORKDIR /app
+
+COPY . .
+
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
+
+FROM eclipse-temurin:21-jdk
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8083
+
+ENTRYPOINT ["java","-jar","app.jar"]
