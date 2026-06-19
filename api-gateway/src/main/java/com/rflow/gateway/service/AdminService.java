@@ -42,6 +42,7 @@ public class AdminService {
         service.setRequestTimeoutMs(request.getRequestTimeoutMs());
         service.setCreatedBy(createdBy);
         service.setCreatedAt(LocalDateTime.now());
+        service.setUpdatedAt(LocalDateTime.now());
 
         BackendService saved = serviceRepository.save(service);
 
