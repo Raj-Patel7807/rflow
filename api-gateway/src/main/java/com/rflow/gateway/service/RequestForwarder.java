@@ -34,8 +34,17 @@ public class RequestForwarder {
 
             String headerName = headerNames.nextElement();
 
+            if("host".equalsIgnoreCase(headerName) || "origin".equalsIgnoreCase(
+                    headerName) || "referer".equalsIgnoreCase(headerName) || "accept-encoding".equalsIgnoreCase(
+                    headerName)) {
+                continue;
+            }
+
+
             headers.put(headerName, Collections.list(request.getHeaders(headerName)));
         }
+
+        headers.set("User-Agent", "Mozilla/5.0");
 
         HttpEntity<String> entity = new HttpEntity<>(body, headers);
 
@@ -46,7 +55,7 @@ public class RequestForwarder {
         } catch(Exception e) {
 
             return ResponseEntity.status(502)
-                                 .body("Bad Gateway");
+                                 .body("Bad Gateway " + e.getMessage());
         }
     }
 }
