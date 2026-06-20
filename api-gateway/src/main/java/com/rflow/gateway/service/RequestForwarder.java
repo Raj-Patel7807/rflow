@@ -57,9 +57,10 @@ public class RequestForwarder {
 
             ResponseEntity<String> response = restTemplate.exchange(targetUrl, method, entity, String.class);
 
-            System.out.println("DOWNSTREAM STATUS = " + response.getStatusCode());
+            System.out.println(response.getHeaders());
 
-            return response;
+            return ResponseEntity.status(response.getStatusCode())
+                                 .body(response.getBody());
 
         } catch(Exception e) {
 
