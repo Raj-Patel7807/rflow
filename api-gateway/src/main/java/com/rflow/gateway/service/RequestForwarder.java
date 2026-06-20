@@ -50,11 +50,8 @@ public class RequestForwarder {
         try {
 
             ResponseEntity<String> response = restTemplate.exchange(targetUrl, method, entity, String.class);
-
-            System.out.println(response.getHeaders());
-
-            return ResponseEntity.status(response.getStatusCode())
-                                 .body(response.getBody());
+            
+            return response;
 
         } catch(Exception e) {
             e.printStackTrace();
