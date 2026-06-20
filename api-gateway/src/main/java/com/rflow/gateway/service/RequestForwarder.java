@@ -54,8 +54,8 @@ public class RequestForwarder {
 
         } catch(Exception e) {
 
-            return ResponseEntity.status(502)
-                                 .body("Bad Gateway " + e.getMessage());
+            return ResponseEntity.status(500)
+                                 .body(e.toString());
         }
     }
 }
