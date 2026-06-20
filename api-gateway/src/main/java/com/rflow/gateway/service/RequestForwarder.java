@@ -24,6 +24,12 @@ public class RequestForwarder {
 
         String targetUrl = service.getTargetUrl() + pathWithoutTenant;
 
+        System.out.println("================================");
+        System.out.println("TARGET URL = " + targetUrl);
+        System.out.println("METHOD = " + request.getMethod());
+        System.out.println("PATH = " + pathWithoutTenant);
+        System.out.println("================================");
+
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
 
         HttpHeaders headers = new HttpHeaders();
@@ -40,7 +46,6 @@ public class RequestForwarder {
                 continue;
             }
 
-
             headers.put(headerName, Collections.list(request.getHeaders(headerName)));
         }
 
@@ -50,9 +55,18 @@ public class RequestForwarder {
 
         try {
 
-            return restTemplate.exchange(targetUrl, method, entity, String.class);
+            ResponseEntity<String> response = restTemplate.exchange(targetUrl, method, entity, String.class);
+
+            System.out.println("DOWNSTREAM STATUS = " + response.getStatusCode());
+
+            return response;
 
         } catch(Exception e) {
+
+            System.out.println("FORWARDING FAILED");
+            System.out.println("TARGET URL = " + targetUrl);
+
+            e.printStackTrace();
 
             return ResponseEntity.status(500)
                                  .body(e.toString());
