@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * APIs for viewing and filtering gateway request logs.
+ */
 @RestController
 @RequestMapping("/api/logs")
 @RequiredArgsConstructor
@@ -19,6 +22,9 @@ public class LogController {
     private final AuthorizationService authorizationService;
     private final RequestLogService requestLogService;
 
+    /**
+     * Returns gateway request logs.
+     */
     @GetMapping
     public ResponseEntity<PagedLogResponse> getLogs(HttpSession session, @RequestParam(required = false) String method,
                                                     @RequestParam(required = false) Integer status,

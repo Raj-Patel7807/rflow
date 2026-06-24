@@ -14,6 +14,9 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Health check APIs for monitoring gateway status and basic system information.
+ */
 @RestController
 @RequestMapping({"/health", "/api/gateway/health"})
 @RequiredArgsConstructor
@@ -26,6 +29,9 @@ public class HealthController {
 
     private final long startTime = System.currentTimeMillis();
 
+    /**
+     * Returns gateway health, dependency status, uptime, memory usage, and response metrics.
+     */
     @GetMapping
     public ResponseEntity<?> health() {
 

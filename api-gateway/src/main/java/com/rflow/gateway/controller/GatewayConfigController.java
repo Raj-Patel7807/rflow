@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * APIs for managing gateway configuration settings.
+ */
 @RestController
 @RequestMapping("/api/gateway-configs")
 @RequiredArgsConstructor
@@ -20,6 +23,9 @@ public class GatewayConfigController {
 
     private final AuthorizationService authorizationService;
 
+    /**
+     * Returns all gateway configuration settings.
+     */
     @GetMapping
     public ResponseEntity<List<GatewayConfiguration>> getAll(HttpSession session) {
 
@@ -28,6 +34,9 @@ public class GatewayConfigController {
         return ResponseEntity.ok(gatewayConfigService.getAll());
     }
 
+    /**
+     * Updates a gateway configuration by key.
+     */
     @PutMapping("/{key}")
     public ResponseEntity<GatewayConfiguration> update(@PathVariable String key,
                                                        @RequestBody UpdateGatewayConfigRequest request,

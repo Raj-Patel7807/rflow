@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * APIs for viewing health check logs and monitoring backend service availability.
+ */
 @RestController
 @RequestMapping("/api/health-logs")
 @RequiredArgsConstructor
@@ -16,6 +19,9 @@ public class HealthLogController {
     private final AuthorizationService authorizationService;
     private final HealthLogService healthLogService;
 
+    /**
+     * Returns health check logs for services.
+     */
     @GetMapping
     public ResponseEntity<PagedHealthLogResponse> getLogs(HttpSession session,
                                                           @RequestParam(required = false) Long serviceId,
@@ -29,6 +35,9 @@ public class HealthLogController {
         return ResponseEntity.ok(healthLogService.getHealthLogs(tenantId, serviceId, page, size));
     }
 
+    /**
+     * Runs a health check for a specific service.
+     */
     @PostMapping("/check")
     public ResponseEntity<?> checkService(HttpSession session, @RequestParam Long serviceId) {
 
@@ -39,6 +48,9 @@ public class HealthLogController {
         return ResponseEntity.ok(healthLogService.checkService(tenantId, serviceId));
     }
 
+    /**
+     * Runs health checks for all services.
+     */
     @PostMapping("/check-all")
     public ResponseEntity<?> checkAllServices(HttpSession session) {
 

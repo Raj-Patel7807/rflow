@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * APIs for managing tenants and tenant selection.
+ */
 @RestController
 @RequestMapping("/api/tenant")
 @RequiredArgsConstructor
@@ -22,6 +25,9 @@ public class TenantController {
     private final AuthorizationService authorizationService;
     private final TenantService tenantService;
 
+    /**
+     * Returns All registered tenants.
+     */
     @GetMapping("/all")
     public ResponseEntity<List<TenantResponse>> getAll(HttpSession session) {
 
@@ -33,6 +39,9 @@ public class TenantController {
                                               .toList());
     }
 
+    /**
+     * Create (Register) a Tenant.
+     */
     @PostMapping
     public ResponseEntity<TenantResponse> create(@RequestBody CreateTenantRequest request, HttpSession session) {
 
@@ -41,6 +50,9 @@ public class TenantController {
         return ResponseEntity.ok(tenantService.create(request));
     }
 
+    /**
+     * Update an existing Tenant.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<TenantResponse> update(@PathVariable Long id, @RequestBody UpdateTenantRequest request,
                                                  HttpSession session) {
@@ -50,6 +62,9 @@ public class TenantController {
         return ResponseEntity.ok(tenantService.update(id, request));
     }
 
+    /**
+     * Delete a Tenant.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id, HttpSession session) {
 
@@ -67,6 +82,9 @@ public class TenantController {
         return ResponseEntity.ok("Tenant Deleted");
     }
 
+    /**
+     * Select the active tenant for the current Session.
+     */
     @PostMapping("/select")
     public ResponseEntity<TenantResponse> select(@RequestBody SelectTenantRequest request, HttpSession session) {
 
@@ -80,6 +98,9 @@ public class TenantController {
         return ResponseEntity.ok(tenantService.map(tenant));
     }
 
+    /**
+     * Returns the selected tenant for the current Session.
+     */
     @GetMapping("/selected")
     public ResponseEntity<TenantResponse> selected(HttpSession session) {
 
@@ -94,6 +115,9 @@ public class TenantController {
         return ResponseEntity.ok(tenantService.map(tenantService.findById(tenantId)));
     }
 
+    /**
+     * Clears the tenant selection for the current session.
+     */
     @PostMapping("/clear")
     public ResponseEntity<?> clearSelection(HttpSession session) {
 

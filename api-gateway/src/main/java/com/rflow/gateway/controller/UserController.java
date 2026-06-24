@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * APIs for managing tenant users.
+ */
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -20,6 +23,9 @@ public class UserController {
     private final UserService userService;
     private final AuthorizationService authorizationService;
 
+    /**
+     * Creates a new user.
+     */
     @PostMapping
     public ResponseEntity<User> create(@RequestBody CreateUserRequest request, HttpSession session) {
 
@@ -32,6 +38,9 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    /**
+     * Returns all users of the selected tenant.
+     */
     @GetMapping
     public ResponseEntity<List<User>> getUsers(HttpSession session) {
 
@@ -42,6 +51,9 @@ public class UserController {
         return ResponseEntity.ok(userService.getTenantUsers(tenantId));
     }
 
+    /**
+     * Update an existing user.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UpdateUserRequest request,
                                        HttpSession session) {
@@ -51,6 +63,9 @@ public class UserController {
         return ResponseEntity.ok(userService.update(id, request));
     }
 
+    /**
+     * Delete a User.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id, HttpSession session) {
 

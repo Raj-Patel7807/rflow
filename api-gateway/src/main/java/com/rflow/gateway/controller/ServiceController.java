@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * APIs for managing backend services and routes.
+ */
 @RestController
 @RequestMapping("/api/services")
 @RequiredArgsConstructor
@@ -16,6 +19,9 @@ public class ServiceController {
     private final AuthorizationService authorizationService;
     private final AdminService adminService;
 
+    /**
+     * Returns All services.
+     */
     @GetMapping
     public ResponseEntity<?> getAll(HttpSession session) {
 
@@ -26,6 +32,9 @@ public class ServiceController {
         return ResponseEntity.ok(adminService.getAll(tenantId));
     }
 
+    /**
+     * Returns a service by ID.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id, HttpSession session) {
 
@@ -34,6 +43,9 @@ public class ServiceController {
         return ResponseEntity.ok(adminService.getById(id));
     }
 
+    /**
+     * Creates a new Service.
+     */
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ServiceRequest request, HttpSession session) {
 
@@ -45,6 +57,9 @@ public class ServiceController {
         return ResponseEntity.ok(adminService.create(tenantId, userId, request));
     }
 
+    /**
+     * Update an existing service.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ServiceRequest request, HttpSession session) {
 
@@ -53,6 +68,9 @@ public class ServiceController {
         return ResponseEntity.ok(adminService.update(id, request));
     }
 
+    /**
+     * Delete a Service.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id, HttpSession session) {
 
