@@ -24,6 +24,7 @@ server:
   servlet:
     session:
       cookie:
+        # Required for frontend authentication across different origins.
         same-site: none
         secure: true
 
