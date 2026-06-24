@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repository for managing Service health logs.
+ */
 @Repository
 public interface ServiceHealthLogRepository extends JpaRepository<ServiceHealthLog, Long> {
 

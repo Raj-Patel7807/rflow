@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repository for managing Rate limit policies.
+ */
 @Repository
 public interface RateLimitPolicyRepository extends JpaRepository<RateLimitPolicy, Long> {
 

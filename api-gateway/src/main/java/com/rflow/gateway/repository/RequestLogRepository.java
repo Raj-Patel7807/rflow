@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repository for managing Request logs.
+ */
 @Repository
 public interface RequestLogRepository extends JpaRepository<RequestLog, Long> {
 

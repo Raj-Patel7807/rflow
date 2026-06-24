@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repository for managing Services.
+ */
 @Repository
 public interface ServiceRepository extends JpaRepository<BackendService, Long> {
 
