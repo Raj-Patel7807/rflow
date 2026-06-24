@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Map;
 
+/**
+ * Centralized exception handling for gateway APIs.
+ * Converts application errors into HTTP responses.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

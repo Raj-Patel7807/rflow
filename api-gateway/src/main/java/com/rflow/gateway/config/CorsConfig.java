@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Global CORS configuration for the gateway.
+ * Allows configured frontend applications to access gateway APIs across different origins.
+ */
 @Configuration
 public class CorsConfig {
 
