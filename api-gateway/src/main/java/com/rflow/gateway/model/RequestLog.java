@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Stores information about requests processed by the gateway.
+ */
 @Entity
 @Table(name = "request_logs")
 

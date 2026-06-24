@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Stores health check results for backend services.
+ */
 @Entity
 @Table(name = "service_health_logs")
 

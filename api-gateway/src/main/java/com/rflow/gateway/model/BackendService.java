@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Stores configuration and routing details for a backend service managed by the gateway.
+ */
 @Entity
 @Table(name = "services")
 

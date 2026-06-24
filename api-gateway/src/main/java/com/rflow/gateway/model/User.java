@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a user associated with a tenant.
+ */
 @Entity
 @Table(name = "users")
 

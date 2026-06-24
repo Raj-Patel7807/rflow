@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a tenant in the gateway system.
+ */
 @Entity
 @Table(name = "tenants")
 

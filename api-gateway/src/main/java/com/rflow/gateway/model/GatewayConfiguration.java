@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Stores gateway configuration values and system settings used by the gateway.
+ */
 @Entity
 @Table(name = "gateway_configurations")
 

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Defines rate limiting rules for backend services.
+ */
 @Entity
 @Table(name = "rate_limit_policies")
 
