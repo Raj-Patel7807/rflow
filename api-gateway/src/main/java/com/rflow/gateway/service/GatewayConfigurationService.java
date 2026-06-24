@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Manages gateway configuration settings.
+ */
 @Service
 @RequiredArgsConstructor
 public class GatewayConfigurationService {
@@ -18,6 +21,9 @@ public class GatewayConfigurationService {
         return gatewayConfigurationRepository.findAll();
     }
 
+    /**
+     * Checks whether a gateway feature is enabled.
+     */
     public boolean isEnabled(String key) {
         GatewayConfiguration config = gatewayConfigurationRepository.findByConfigKey(key);
 

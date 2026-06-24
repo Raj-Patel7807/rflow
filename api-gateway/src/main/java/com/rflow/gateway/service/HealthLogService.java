@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Manages service health checks and health log records.
+ */
 @Service
 @RequiredArgsConstructor
 public class HealthLogService {
@@ -23,6 +26,9 @@ public class HealthLogService {
     private final ServiceRepository serviceRepository;
     private final HealthCheckService healthCheckService;
 
+    /**
+     * Returns paginated health logs for tenant services.
+     */
     public PagedHealthLogResponse getHealthLogs(Long tenantId, Long serviceId, int page, int size) {
 
         List<Long> serviceIds = serviceRepository.findByTenantId(tenantId)
@@ -58,6 +64,9 @@ public class HealthLogService {
                                      .build();
     }
 
+    /**
+     * Loads service names for response mapping.
+     */
     private Map<Long, String> loadServiceNames(Long tenantId) {
 
         Map<Long, String> names = new HashMap<>();
@@ -69,6 +78,9 @@ public class HealthLogService {
         return names;
     }
 
+    /**
+     * Converts a health log entity into a response DTO.
+     */
     private HealthLogResponse map(ServiceHealthLog log, Map<Long, String> serviceNames) {
         return HealthLogResponse.builder()
                                 .id(log.getId())
@@ -80,6 +92,9 @@ public class HealthLogService {
                                 .build();
     }
 
+    /**
+     * Executes a health check for a specific service.
+     */
     public HealthLogResponse checkService(Long tenantId, Long serviceId) {
         BackendService service = serviceRepository.findById(serviceId)
                                                   .orElseThrow(() -> new RuntimeException("Service Not Found"));
@@ -105,9 +120,13 @@ public class HealthLogService {
         return map(saved, serviceNames);
     }
 
+    /**
+     * Executes health checks for all services of a tenant.
+     */
     public List<HealthLogResponse> checkAllServices(Long tenantId) {
         List<BackendService> services = serviceRepository.findByTenantId(tenantId);
         Map<Long, String> serviceNames = new HashMap<>();
+
         for(BackendService service : services) {
             serviceNames.put(service.getId(), service.getServiceName());
         }

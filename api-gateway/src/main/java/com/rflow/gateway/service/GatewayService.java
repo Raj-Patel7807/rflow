@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+/**
+ * Handles request processing, routing, rate limiting, health checks, and request forwarding.
+ */
 @Service
 @RequiredArgsConstructor
 public class GatewayService {
@@ -25,6 +28,9 @@ public class GatewayService {
     private final RateLimiterService rateLimiterService;
     private final HealthCheckService healthCheckService;
 
+    /**
+     * Processes incoming gateway requests and forwards them to the appropriate backend service.
+     */
     public ResponseEntity<?> process(String tenantSlug, HttpServletRequest request, String body) {
 
         if(!gatewayConfigurationService.isEnabled("gateway.enabled")) {
@@ -134,10 +140,16 @@ public class GatewayService {
         return response;
     }
 
+    /**
+     * Removes the tenant prefix from the request path.
+     */
     private String removeTenant(String path, String tenantSlug) {
         return path.replaceFirst("/" + tenantSlug, "");
     }
 
+    /**
+     * Normalizes request paths for route matching.
+     */
     private String normalize(String path) {
         if(path == null) {
             return "/";

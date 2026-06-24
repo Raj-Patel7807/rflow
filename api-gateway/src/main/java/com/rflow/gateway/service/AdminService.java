@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Manages backend service creation, updates, retrieval, and deletion.
+ */
 @Service
 @RequiredArgsConstructor
 public class AdminService {
@@ -73,6 +76,9 @@ public class AdminService {
         serviceRepository.deleteById(id);
     }
 
+    /**
+     * Converts a backend service entity into a response DTO.
+     */
     private ServiceResponse map(BackendService service) {
 
         return ServiceResponse.builder()

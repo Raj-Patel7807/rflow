@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+/**
+ * Handles user authentication and session management.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -71,6 +74,9 @@ public class AuthService {
         session.invalidate();
     }
 
+    /**
+     * Returns details of the currently authenticated user.
+     */
     public LoginResponse currentUser(HttpSession session) {
 
         Long userId = (Long) session.getAttribute("userId");

@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Provides dashboard statistics and analytics for the gateway.
+ */
 @Service
 @RequiredArgsConstructor
 public class DashboardService {
@@ -22,6 +25,9 @@ public class DashboardService {
     private final UserRepository userRepository;
     private final RequestLogService requestLogService;
 
+    /**
+     * Returns overall system statistics across all tenants.
+     */
     public SystemStatsResponse systemStats() {
 
         return SystemStatsResponse.builder()
@@ -33,6 +39,9 @@ public class DashboardService {
                                   .build();
     }
 
+    /**
+     * Returns dashboard statistics for a specific tenant.
+     */
     public DashboardStatsResponse stats(Long tenantId) {
 
         long total = requestLogRepository.countByTenantId(tenantId);
@@ -61,21 +70,33 @@ public class DashboardService {
                                      .build();
     }
 
+    /**
+     * Returns the most recent requests for a tenant.
+     */
     public List<RequestLogResponse> recentRequests(Long tenantId, int limit) {
 
         return requestLogService.getRecent(tenantId, limit);
     }
 
+    /**
+     * Returns services with the highest request traffic.
+     */
     public List<Object[]> topServices(Long tenantId) {
 
         return requestLogRepository.topServices(tenantId);
     }
 
+    /**
+     * Returns services with the highest average response time.
+     */
     public List<Object[]> slowServices(Long tenantId) {
 
         return requestLogRepository.slowServices(tenantId);
     }
 
+    /**
+     * Returns request count data for dashboard charts.
+     */
     public List<Object[]> requestChart(Long tenantId) {
 
         return requestLogRepository.requestChart(tenantId);

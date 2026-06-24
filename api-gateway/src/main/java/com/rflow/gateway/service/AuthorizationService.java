@@ -4,6 +4,9 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Handles authorization checks and tenant resolution based on the current user session.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthorizationService {
@@ -63,6 +66,9 @@ public class AuthorizationService {
         throw new RuntimeException("Forbidden");
     }
 
+    /**
+     * Resolves the active tenant for the current user.
+     */
     public Long resolveTenantId(HttpSession session) {
 
         requireLogin(session);
@@ -82,6 +88,9 @@ public class AuthorizationService {
         return (Long) session.getAttribute("tenantId");
     }
 
+    /**
+     * Resolves the active tenant if available.
+     */
     public Long resolveTenantIdOptional(HttpSession session) {
 
         requireLogin(session);

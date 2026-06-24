@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Manages Users.
+ */
 @Service
 @RequiredArgsConstructor
 public class UserService {

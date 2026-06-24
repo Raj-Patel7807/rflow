@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Manages rate limit policies for backend services.
+ */
 @Service
 @RequiredArgsConstructor
 public class RateLimitService {
 
     private final RateLimitPolicyRepository rateLimitPolicyRepository;
-
+    
     public RateLimitPolicy findPolicy(Long serviceId) {
         return rateLimitPolicyRepository.findByServiceIdAndIsActive(serviceId, true);
     }

@@ -13,6 +13,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Collections;
 import java.util.Enumeration;
 
+/**
+ * Forwards gateway requests to the target backend service.
+ */
 @Service
 @RequiredArgsConstructor
 public class RequestForwarder {

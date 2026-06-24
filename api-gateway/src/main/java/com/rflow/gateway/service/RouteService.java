@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Manages backend services.
+ */
 @Service
 @RequiredArgsConstructor
 public class RouteService {
