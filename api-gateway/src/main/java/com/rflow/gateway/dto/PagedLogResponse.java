@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Paginated Response payload containing request logs.
+ */
 @Data
 @Builder
 public class PagedLogResponse {

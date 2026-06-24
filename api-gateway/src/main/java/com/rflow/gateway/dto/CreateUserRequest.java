@@ -2,6 +2,9 @@ package com.rflow.gateway.dto;
 
 import lombok.Data;
 
+/**
+ * Request payload for creating a user.
+ */
 @Data
 public class CreateUserRequest {
 

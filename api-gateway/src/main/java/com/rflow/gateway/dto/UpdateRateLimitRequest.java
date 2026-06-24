@@ -2,6 +2,9 @@ package com.rflow.gateway.dto;
 
 import lombok.Data;
 
+/**
+ * Request payload for updating a rate limit policy.
+ */
 @Data
 public class UpdateRateLimitRequest {
 

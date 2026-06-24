@@ -2,6 +2,9 @@ package com.rflow.gateway.dto;
 
 import lombok.Data;
 
+/**
+ * Request payload for updating a user.
+ */
 @Data
 public class UpdateUserRequest {
 

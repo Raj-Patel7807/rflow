@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Paginated Response payload containing Health Logs.
+ */
 @Data
 @Builder
 public class PagedHealthLogResponse {

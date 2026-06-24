@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * Response payload containing request logs.
+ */
 @Data
 @Builder
 public class RequestLogResponse {

@@ -3,6 +3,9 @@ package com.rflow.gateway.dto;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Response returned after successful auth.
+ */
 @Data
 @Builder
 public class LoginResponse {

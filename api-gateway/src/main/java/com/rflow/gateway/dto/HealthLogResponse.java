@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * Response payload for containing Health Logs.
+ */
 @Data
 @Builder
 public class HealthLogResponse {

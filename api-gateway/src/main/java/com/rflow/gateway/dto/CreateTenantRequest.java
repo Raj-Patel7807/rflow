@@ -2,6 +2,9 @@ package com.rflow.gateway.dto;
 
 import lombok.Data;
 
+/**
+ * Request payload for creating a tenant.
+ */
 @Data
 public class CreateTenantRequest {
 

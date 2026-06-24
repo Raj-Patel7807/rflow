@@ -3,6 +3,9 @@ package com.rflow.gateway.dto;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Response payload containing System stats.
+ */
 @Data
 @Builder
 public class SystemStatsResponse {
