@@ -83,14 +83,7 @@ export default function ServiceHealth() {
 
     return (
         <div className="page">
-            <header
-                className="page-header"
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                }}
-            >
+            <header className="page-header page-header-responsive">
                 <div>
                     <h2>Service Health Dashboard</h2>
                     <p className="muted">

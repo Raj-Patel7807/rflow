@@ -48,14 +48,7 @@ export default function GatewayHealth() {
 
     return (
         <div className="page">
-            <header
-                className="page-header"
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                }}
-            >
+            <header className="page-header page-header-responsive">
                 <div>
                     <h2>Gateway Health Status</h2>
                     <p className="muted">
@@ -148,14 +141,7 @@ export default function GatewayHealth() {
                             style={{ marginBottom: "24px" }}
                         >
                             <h3>Gateway Memory Usage (JVM)</h3>
-                            <div
-                                style={{
-                                    marginBottom: "12px",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    fontSize: "14px",
-                                }}
-                            >
+                            <div className="jvm-memory-details">
                                 <span>
                                     Used:{" "}
                                     <strong>
@@ -195,15 +181,7 @@ export default function GatewayHealth() {
                         </section>
                     )}
 
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns:
-                                "repeat(auto-fit, minmax(320px, 1fr))",
-                            gap: "20px",
-                            marginBottom: "24px",
-                        }}
-                    >
+                    <div className="gateway-health-grid">
                         {health?.dependencies && (
                             <section className="panel" style={{ margin: 0 }}>
                                 <h3>Gateway Internal Components</h3>

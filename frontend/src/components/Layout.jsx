@@ -64,6 +64,8 @@ export default function Layout() {
     const { user, logout } = useAuth();
     const { tenants, selectedTenant, selectTenant } = useTenant();
     const navigate = useNavigate();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
     async function handleLogout() {
         await logout();
@@ -76,7 +78,14 @@ export default function Layout() {
     }
 
     return (
-        <div className="layout">
+        <div className={`layout ${isSidebarOpen ? "sidebar-open" : ""}`}>
+            {isSidebarOpen && (
+                <div
+                    className="sidebar-backdrop"
+                    onClick={() => setIsSidebarOpen(false)}
+                />
+            )}
+
             <aside className="sidebar">
                 <div className="sidebar-top">
                     <div className="brand">
@@ -98,16 +107,69 @@ export default function Layout() {
                                 to={link.to}
                                 end={link.end}
                                 className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+                                onClick={() => setIsSidebarOpen(false)}
                             >
                                 {link.label}
                             </NavLink>
                         ))}
                     </nav>
                 </div>
+
+                <div className="sidebar-footer">
+                    <div className="user-info">
+                        <strong>{user?.fullName}</strong>
+                        <span>SUPER ADMIN</span>
+                    </div>
+                    <button
+                        type="button"
+                        className="btn-sidebar-logout"
+                        onClick={handleLogout}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                            />
+                        </svg>
+                        <span>Sign Out</span>
+                    </button>
+                </div>
             </aside>
 
             <main className="main">
                 <header className="top-header">
+                    <button
+                        type="button"
+                        className="sidebar-toggle"
+                        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                        aria-label="Toggle navigation menu"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M4 6h16M4 12h16M4 18h16"
+                            />
+                        </svg>
+                    </button>
+
                     <div className="header-left">
                         <div className="tenant-selector-wrapper">
                             <select
@@ -136,37 +198,75 @@ export default function Layout() {
                     </div>
 
                     <div className="header-right">
-                        <div className="user-profile">
-                            <div className="user-avatar">
-                                {user?.fullName?.charAt(0).toUpperCase() || "A"}
-                            </div>
-                            <div className="user-details">
-                                <strong>{user?.fullName}</strong>
-                                <span>SUPER ADMIN</span>
-                            </div>
-                        </div>
-                        <button
-                            type="button"
-                            className="btn-logout"
-                            onClick={handleLogout}
-                            title="Logout"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="18"
-                                height="18"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth="2"
+                        <div className="user-menu-wrapper">
+                            <button
+                                type="button"
+                                className="user-profile-btn"
+                                onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                                aria-label="User Menu"
                             >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                                />
-                            </svg>
-                        </button>
+                                <div className="user-avatar">
+                                    {user?.fullName?.charAt(0).toUpperCase() || "A"}
+                                </div>
+                                <div className="user-details">
+                                    <strong>{user?.fullName}</strong>
+                                    <span>SUPER ADMIN</span>
+                                </div>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="14"
+                                    height="14"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="2.5"
+                                    className={`dropdown-chevron ${isProfileDropdownOpen ? "open" : ""}`}
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            {isProfileDropdownOpen && (
+                                <>
+                                    <div
+                                        className="dropdown-backdrop"
+                                        onClick={() => setIsProfileDropdownOpen(false)}
+                                    />
+                                    <div className="user-dropdown">
+                                        <div className="dropdown-header">
+                                            <strong>{user?.fullName}</strong>
+                                            <span>SUPER ADMIN</span>
+                                        </div>
+                                        <div className="dropdown-divider" />
+                                        <button
+                                            type="button"
+                                            className="dropdown-item logout-item"
+                                            onClick={() => {
+                                                setIsProfileDropdownOpen(false);
+                                                handleLogout();
+                                            }}
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="16"
+                                                height="16"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                                                />
+                                            </svg>
+                                            <span>Sign Out</span>
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+                        </div>
                     </div>
                 </header>
 
