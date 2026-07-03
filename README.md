@@ -12,6 +12,20 @@ RFlow is a lightweight, high-performance API Gateway and traffic controller buil
 
 ---
 
+## 🌐 Live Demo & Deployments
+
+The project is fully deployed and active:
+
+| Component | Target URL | Platform |
+| :--- | :--- | :--- |
+| **Admin Dashboard 📊** | [rflow-dashboard.vercel.app](https://rflow-dashboard.vercel.app/) | Vercel |
+| **API Gateway 🚀** | [rflow-dopn.onrender.com](https://rflow-dopn.onrender.com/) | Render |
+| **Mock User Service 👤** | [user-service-3nxn.onrender.com](https://user-service-3nxn.onrender.com/) | Render |
+| **Mock Product Service 📦** | [product-service-tk6p.onrender.com](https://product-service-tk6p.onrender.com/) | Render |
+| **Mock Payment Service 💳** | [payment-service-nuu7.onrender.com](https://payment-service-nuu7.onrender.com/) | Render |
+
+---
+
 ## Why RFlow?
 
 Modern backend microservice architectures require a single, robust entry point to handle security, rate limiting, logging, and routing. Without a gateway, clients have to directly interact with multiple service hosts, causing CORS problems, security leaks, and routing complexities. 
@@ -383,17 +397,16 @@ The browser dashboard will run at [http://localhost:5173](http://localhost:5173)
 
 ## Sample API Requests & Logging
 
-Below is a walkthrough of how to request resources via the gateway and how the gateway handles routing, logging, and rate limiting.
+Below is a walkthrough of how to request resources via the gateway and how the gateway handles routing, logging, and rate limiting. You can execute these requests against your **Local Instance** or the **Live Deployed Endpoint**.
 
 ### 1. Dynamic Routing Request
-By calling the gateway route prefixed with the tenant slug (`tenant-a`), the gateway looks up the prefix `/users` to forward the request to the `user-service` running at `http://localhost:8081/users`.
+By calling the gateway route prefixed with the tenant slug (`tenant-a`), the gateway resolves the prefix path (`/users`) and proxies it downstream to the User Service.
 
-**Request:**
-```http
-GET http://localhost:8080/tenant-a/users
-```
+**Request Endpoint:**
+* **Local:** `GET http://localhost:8080/tenant-a/api/users`
+* **Production:** `GET https://rflow-dopn.onrender.com/tenant-a/api/users`
 
-**Gateway Response:**
+**Response:**
 ```json
 [
   {
@@ -412,14 +425,13 @@ GET http://localhost:8080/tenant-a/users
 ---
 
 ### 2. Rate Limited Request
-If a service has a policy limiting requests to **3 requests per 10 seconds** and the limit is exceeded, subsequent requests will receive a `429 Too Many Requests` status code.
+If a service has a policy limiting requests (e.g., **3 requests per 10 seconds**) and the limit is exceeded, subsequent requests will receive a `429 Too Many Requests` status code.
 
-**Request:**
-```http
-GET http://localhost:8080/tenant-a/users
-```
+**Request Endpoint:**
+* **Local:** `GET http://localhost:8080/tenant-a/api/users`
+* **Production:** `GET https://rflow-dopn.onrender.com/tenant-a/api/users`
 
-**Gateway Response:**
+**Response:**
 ```http
 HTTP/1.1 429 Too Many Requests
 Content-Type: text/plain
@@ -430,14 +442,13 @@ Too Many Requests
 ---
 
 ### 3. Service Outage/Health Failure
-If the downstream `payment-service` at port `8083` is shut down, the gateway checks service health, detects that it is offline, and returns a `503 Service Unavailable` status code.
+If the downstream target service is shut down or goes offline, the health checker detects it and returns a `503 Service Unavailable` status code to prevent routing failures.
 
-**Request:**
-```http
-GET http://localhost:8080/tenant-a/payments
-```
+**Request Endpoint:**
+* **Local:** `GET http://localhost:8080/tenant-a/api/payments`
+* **Production:** `GET https://rflow-dopn.onrender.com/tenant-a/api/payments`
 
-**Gateway Response:**
+**Response:**
 ```http
 HTTP/1.1 503 Service Unavailable
 Content-Type: text/plain
@@ -454,15 +465,6 @@ Service Unavailable
 - [ ] **Load Balancing Configurations**: Add Round Robin and Least Connections scheduling policies for routing to multiple downstream hosts.
 - [ ] **Service Registry & Discovery**: Integrate Spring Cloud Eureka or Consul to resolve target microservice hosts dynamically.
 - [ ] **Orchestrated Docker Compose**: A single `docker-compose.yml` to spin up PostgreSQL, the gateway, all mock services, and the dashboard with one command.
-
----
-
-## Key Learnings
-
-- **Reverse Proxy Implementation**: Gained hands-on experience handling servlet request payloads, filtering headers, and forwarding payloads.
-- **Relational Schema Modeling**: Modeled a multi-tenant DB structure mapping foreign keys, unique constraint scopes, and indexing performance paths.
-- **Concurrency & Concurrency Primitives**: Used thread-safe `ConcurrentHashMap` collections to implement rate-limiting metrics.
-- **Microservices Orchestration**: Learned to manage communication between independent downstream service nodes and dynamic health pings.
 
 ---
 
