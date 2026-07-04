@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -18,8 +19,14 @@ public class HomeController {
 
     @GetMapping({"", "/"})
     public ResponseEntity<Map<String, Object>> home() {
-        return ResponseEntity.ok(Map.of("service", serviceName, "status", "running", "timestamp", Instant.now()
-                                                                                                         .toString(),
-                                        "endpoints", Map.of("health", "/health")));
+        LinkedHashMap<String, Object> res = new LinkedHashMap<>();
+
+        res.put("service", serviceName);
+        res.put("status", "running");
+        res.put("timestamp", Instant.now()
+                                    .toString());
+        res.put("endpoints", Map.of("health", "/health"));
+
+        return ResponseEntity.ok(res);
     }
 }
