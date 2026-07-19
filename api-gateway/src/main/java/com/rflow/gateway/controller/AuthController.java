@@ -3,6 +3,8 @@ package com.rflow.gateway.controller;
 import com.rflow.gateway.dto.LoginRequest;
 import com.rflow.gateway.dto.LoginResponse;
 import com.rflow.gateway.service.AuthService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +33,18 @@ public class AuthController {
      * Ends the current user session.
      */
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpSession session) {
+    public ResponseEntity<?> logout(HttpSession session, HttpServletResponse response) {
 
         authService.logout(session);
 
-        return ResponseEntity.ok("Logged Out");
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok("Logged out successfully");
     }
 
     /**
