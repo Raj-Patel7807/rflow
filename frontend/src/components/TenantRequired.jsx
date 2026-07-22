@@ -1,8 +1,9 @@
 import { useTenant } from "../context/TenantContext";
+import Loader from "./Loader";
 
 export default function TenantRequired({ children }) {
     const { tenants, selectedTenant, selectTenant, loading } = useTenant();
-    if (loading) { return <div className="page-loading">Loading tenant...</div>; }
+    if (loading) { return <Loader message="Loading tenant configuration..." />; }
 
     if (!selectedTenant) {
         return (
