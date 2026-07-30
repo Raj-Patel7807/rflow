@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
 import { useTenant } from "../context/TenantContext";
+import { useAuth } from "../context/AuthContext";
 
 const emptyForm = {
     tenantName: "",
@@ -13,6 +14,8 @@ const emptyForm = {
 
 export default function Tenants() {
     const { tenants, refreshTenants, selectTenant } = useTenant();
+    const { user } = useAuth();
+    const isDeveloper = user?.role === "DEVELOPER";
     const [form, setForm] = useState(emptyForm);
     const [editingId, setEditingId] = useState(null);
     const [editForm, setEditForm] = useState({
@@ -110,6 +113,7 @@ export default function Tenants() {
             {error && <div className="error-box">{error}</div>}
             {message && <div className="success-box">{message}</div>}
 
+            {!isDeveloper && (
             <section className="panel">
                 <h3>Create Tenant</h3>
                 <form className="form-grid" onSubmit={handleCreate}>
@@ -199,6 +203,7 @@ export default function Tenants() {
                     </div>
                 </form>
             </section>
+            )}
 
             <section className="panel">
                 <h3>All Tenants</h3>
@@ -314,27 +319,33 @@ export default function Tenants() {
                                                 </code>
                                             </td>
                                             <td className="actions">
-                                                <button
-                                                    type="button"
-                                                    className="btn-link"
-                                                    onClick={() => handleSelect(tenant)}
-                                                >
-                                                    Select
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="btn-link"
-                                                    onClick={() => startEdit(tenant)}
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="btn-link danger"
-                                                    onClick={() => deleteTenant(tenant.id)}
-                                                >
-                                                    Delete
-                                                </button>
+                                                {isDeveloper ? (
+                                                    <span className="muted" style={{ fontSize: "12.5px", fontStyle: "italic" }}>Disabled in Demo Mode</span>
+                                                ) : (
+                                                    <>
+                                                        <button
+                                                            type="button"
+                                                            className="btn-link"
+                                                            onClick={() => handleSelect(tenant)}
+                                                        >
+                                                            Select
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            className="btn-link"
+                                                            onClick={() => startEdit(tenant)}
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            className="btn-link danger"
+                                                            onClick={() => deleteTenant(tenant.id)}
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </>
+                                                )}
                                             </td>
                                         </>
                                     )}

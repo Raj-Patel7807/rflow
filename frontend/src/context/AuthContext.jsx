@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         api("/api/auth/me").then((data) => {
-                if (data.role !== "SUPER_ADMIN") { setUser(null); return; }
+                if (data.role !== "SUPER_ADMIN" && data.role !== "TENANT_ADMIN" && data.role !== "DEVELOPER") { setUser(null); return; }
                 setUser(data);
             }).catch(() => setUser(null))
             .finally(() => setLoading(false));
@@ -21,9 +21,9 @@ export function AuthProvider({ children }) {
             body: JSON.stringify({ email, password }),
         });
 
-        if (data.role !== "SUPER_ADMIN") {
+        if (data.role !== "SUPER_ADMIN" && data.role !== "TENANT_ADMIN" && data.role !== "DEVELOPER") {
             await api("/api/auth/logout", { method: "POST" }).catch(() => {});
-            throw new Error("Only SUPER_ADMIN can access this portal");
+            throw new Error("Only authorized roles can access this portal");
         }
         setUser(data);
         return data;

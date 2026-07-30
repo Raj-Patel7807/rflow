@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { api } from "../api/client";
 import { useTenant } from "../context/TenantContext";
 import Pagination from "../components/Pagination";
+import { useAuth } from "../context/AuthContext";
 
 export default function ServiceHealth() {
     const { selectedTenant } = useTenant();
+    const { user } = useAuth();
+    const isDeveloper = user?.role === "DEVELOPER";
     const [services, setServices] = useState([]);
     const [healthLogs, setHealthLogs] = useState({
         logs: [],
@@ -91,6 +94,7 @@ export default function ServiceHealth() {
                         backend services
                     </p>
                 </div>
+                {!isDeveloper && (
                 <button
                     type="button"
                     className="btn-primary"
@@ -99,6 +103,7 @@ export default function ServiceHealth() {
                 >
                     {checkingAll ? "Checking all..." : "Test All Services"}
                 </button>
+                )}
             </header>
 
             {error && <div className="error-box">{error}</div>}
@@ -140,19 +145,23 @@ export default function ServiceHealth() {
                                             </code>
                                         </td>
                                         <td>
-                                            <button
-                                                type="button"
-                                                className="btn-link"
-                                                onClick={() =>
-                                                    checkSingleHealth(service)
-                                                }
-                                                disabled={
-                                                    checkingServiceId ===
-                                                    service.id
-                                                }
-                                            >
-                                                {checkingServiceId === service.id ? "Checking..." : "Check Status"}
-                                            </button>
+                                            {isDeveloper ? (
+                                                <span className="muted" style={{ fontSize: "12.5px", fontStyle: "italic" }}>Disabled in Demo Mode</span>
+                                            ) : (
+                                                <button
+                                                    type="button"
+                                                    className="btn-link"
+                                                    onClick={() =>
+                                                        checkSingleHealth(service)
+                                                    }
+                                                    disabled={
+                                                        checkingServiceId ===
+                                                        service.id
+                                                    }
+                                                >
+                                                    {checkingServiceId === service.id ? "Checking..." : "Check Status"}
+                                                </button>
+                                            )}
                                         </td>
                                     </tr>
                                 ))

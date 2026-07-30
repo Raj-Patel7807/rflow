@@ -1218,3 +1218,108 @@ code {
         gap: 4px;
     }
 }
+
+/* Demo Account Section */
+.demo-account-section {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border);
+    font-size: 14px;
+    color: var(--text-h);
+}
+
+.demo-account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.demo-account-title {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    text-transform: uppercase;
+}
+
+.demo-account-quickfill {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0;
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.demo-account-quickfill:hover {
+    color: #818cf8;
+    text-decoration: underline;
+}
+
+.demo-account-quickfill:active {
+    transform: scale(0.95);
+}
+
+.demo-account-card {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.015);
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    line-height: 1.6;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.demo-account-card:hover {
+    background: rgba(99, 102, 241, 0.04);
+    border-color: rgba(99, 102, 241, 0.4);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.demo-account-card:active {
+    transform: translateY(0);
+}
+
+.demo-account-field {
+    margin-bottom: 4px;
+    font-size: 13.5px;
+    color: var(--text);
+}
+
+.demo-account-field code {
+    font-family: var(--mono);
+    color: var(--text-h);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-left: 4px;
+}
+
+.demo-account-card:hover .demo-account-field code {
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.15);
+}
+
+.demo-account-footer {
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.demo-account-footer::before {
+    content: "•";
+    color: var(--accent);
+    font-weight: bold;
+}

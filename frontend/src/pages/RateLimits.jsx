@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
 import { useTenant } from "../context/TenantContext";
+import { useAuth } from "../context/AuthContext";
 
 const emptyForm = {
     serviceId: "",
@@ -11,6 +12,8 @@ const emptyForm = {
 
 export default function RateLimits() {
     const { selectedTenant } = useTenant();
+    const { user } = useAuth();
+    const isDeveloper = user?.role === "DEVELOPER";
     const [services, setServices] = useState([]);
     const [policies, setPolicies] = useState([]);
     const [form, setForm] = useState(emptyForm);
@@ -96,6 +99,7 @@ export default function RateLimits() {
             {error && <div className="error-box">{error}</div>}
             {message && <div className="success-box">{message}</div>}
 
+            {!isDeveloper && (
             <section className="panel">
                 <h3>Add Policy</h3>
                 <form className="form-grid" onSubmit={handleSubmit}>
@@ -168,6 +172,7 @@ export default function RateLimits() {
                     </div>
                 </form>
             </section>
+            )}
 
             <section className="panel">
                 <h3>Active Policies</h3>
@@ -207,24 +212,30 @@ export default function RateLimits() {
                                             </span>
                                         </td>
                                         <td className="actions">
-                                            <button
-                                                type="button"
-                                                className="btn-link"
-                                                onClick={() =>
-                                                    togglePolicy(policy)
-                                                }
-                                            >
-                                                {policy.isActive ? "Disable" : "Enable"}
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="btn-link danger"
-                                                onClick={() =>
-                                                    deletePolicy(policy.id)
-                                                }
-                                            >
-                                                Delete
-                                            </button>
+                                            {isDeveloper ? (
+                                                <span className="muted" style={{ fontSize: "12.5px", fontStyle: "italic" }}>Disabled in Demo Mode</span>
+                                            ) : (
+                                                <>
+                                                    <button
+                                                        type="button"
+                                                        className="btn-link"
+                                                        onClick={() =>
+                                                            togglePolicy(policy)
+                                                        }
+                                                    >
+                                                        {policy.isActive ? "Disable" : "Enable"}
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="btn-link danger"
+                                                        onClick={() =>
+                                                            deletePolicy(policy.id)
+                                                        }
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </>
+                                            )}
                                         </td>
                                     </tr>
                                 ))

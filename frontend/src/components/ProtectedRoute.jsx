@@ -3,8 +3,8 @@ import { useAuth } from "../context/AuthContext";
 import Loader from "./Loader";
 
 export default function ProtectedRoute({ children }) {
-    const { user, loading, isSuperAdmin } = useAuth();
+    const { user, loading } = useAuth();
     if (loading) { return <Loader message="Verifying authentication status" />; }
-    if (!user || !isSuperAdmin) { return <Navigate to="/login" replace />; }
+    if (!user) { return <Navigate to="/login" replace />; }
     return children;
 }

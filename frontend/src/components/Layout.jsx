@@ -61,7 +61,8 @@ function GatewayHealthIndicator() {
 }
 
 export default function Layout() {
-    const { user, logout } = useAuth();
+    const { user, logout, isSuperAdmin } = useAuth();
+    const filteredLinks = links;
     const { tenants, selectedTenant, selectTenant } = useTenant();
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -101,7 +102,7 @@ export default function Layout() {
                     </div>
 
                     <nav>
-                        {links.map((link) => (
+                        {filteredLinks.map((link) => (
                             <NavLink
                                 key={link.to}
                                 to={link.to}
@@ -118,7 +119,7 @@ export default function Layout() {
                 <div className="sidebar-footer">
                     <div className="user-info">
                         <strong>{user?.fullName}</strong>
-                        <span>SUPER ADMIN</span>
+                        <span>{user?.role?.replace("_", " ")}</span>
                     </div>
                     <button
                         type="button"
@@ -171,29 +172,37 @@ export default function Layout() {
                     </button>
 
                     <div className="header-left">
-                        <div className="tenant-selector-wrapper">
-                            <select
-                                id="tenant-select"
-                                value={selectedTenant?.id || ""}
-                                onChange={handleTenantChange}
-                                className="tenant-select"
-                            >
-                                <option value="">-- No Active Tenant --</option>
-                                {tenants.map((tenant) => (
-                                    <option key={tenant.id} value={tenant.id}>
-                                        {tenant.tenantName} (/
-                                        {tenant.tenantSlug})
-                                    </option>
-                                ))}
-                            </select>
-                            {selectedTenant && (
-                                <span
-                                    className={`pill ${selectedTenant.status === "ACTIVE" ? "pill-green" : "pill-gray"}`}
+                        {isSuperAdmin ? (
+                            <div className="tenant-selector-wrapper">
+                                <select
+                                    id="tenant-select"
+                                    value={selectedTenant?.id || ""}
+                                    onChange={handleTenantChange}
+                                    className="tenant-select"
                                 >
-                                    {selectedTenant.status}
-                                </span>
-                            )}
-                        </div>
+                                    <option value="">-- No Active Tenant --</option>
+                                    {tenants.map((tenant) => (
+                                        <option key={tenant.id} value={tenant.id}>
+                                            {tenant.tenantName} (/{tenant.tenantSlug})
+                                        </option>
+                                    ))}
+                                </select>
+                                {selectedTenant && (
+                                    <span
+                                        className={`pill ${selectedTenant.status === "ACTIVE" ? "pill-green" : "pill-gray"}`}
+                                    >
+                                        {selectedTenant.status}
+                                    </span>
+                                )}
+                            </div>
+                        ) : (
+                            selectedTenant && (
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px", background: "rgba(255, 255, 255, 0.03)", padding: "6px 12px", borderRadius: "6px", border: "1px solid var(--border)" }}>
+                                    <span style={{ fontSize: "12px", color: "var(--muted)", fontWeight: "500", textTransform: "uppercase" }}>Tenant</span>
+                                    <strong style={{ fontSize: "14px", color: "var(--foreground)" }}>{selectedTenant.tenantName}</strong>
+                                </div>
+                            )
+                        )}
                         <GatewayHealthIndicator />
                     </div>
 
@@ -210,7 +219,7 @@ export default function Layout() {
                                 </div>
                                 <div className="user-details">
                                     <strong>{user?.fullName}</strong>
-                                    <span>SUPER ADMIN</span>
+                                    <span>{user?.role?.replace("_", " ")}</span>
                                 </div>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -235,7 +244,7 @@ export default function Layout() {
                                     <div className="user-dropdown">
                                         <div className="dropdown-header">
                                             <strong>{user?.fullName}</strong>
-                                            <span>SUPER ADMIN</span>
+                                            <span>{user?.role?.replace("_", " ")}</span>
                                         </div>
                                         <div className="dropdown-divider" />
                                         <button

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
+import { useAuth } from "../context/AuthContext";
 
 export default function GatewayHealth() {
+    const { user } = useAuth();
+    const isDeveloper = user?.role === "DEVELOPER";
     const [health, setHealth] = useState(null);
     const [systemStats, setSystemStats] = useState(null);
     const [error, setError] = useState("");
@@ -56,6 +59,7 @@ export default function GatewayHealth() {
                         and active dependencies
                     </p>
                 </div>
+                {!isDeveloper && (
                 <button
                     type="button"
                     className="btn-secondary"
@@ -64,6 +68,7 @@ export default function GatewayHealth() {
                 >
                     {loading ? "Refreshing..." : "Refresh Status"}
                 </button>
+                )}
             </header>
 
             {error && <div className="error-box">{error}</div>}

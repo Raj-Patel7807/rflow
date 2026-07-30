@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
+import { useAuth } from "../context/AuthContext";
 
 export default function Settings() {
+    const { user } = useAuth();
+    const isDeveloper = user?.role === "DEVELOPER";
     const [configs, setConfigs] = useState([]);
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
@@ -59,6 +62,7 @@ export default function Settings() {
                                     key={config.id}
                                     config={config}
                                     onSave={updateConfig}
+                                    isDeveloper={isDeveloper}
                                 />
                             ))}
                         </tbody>
@@ -69,7 +73,7 @@ export default function Settings() {
     );
 }
 
-function ConfigRow({ config, onSave }) {
+function ConfigRow({ config, onSave, isDeveloper }) {
     const [value, setValue] = useState(config.configValue);
 
     return (
@@ -81,17 +85,22 @@ function ConfigRow({ config, onSave }) {
                 <input
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
+                    disabled={isDeveloper}
                 />
             </td>
             <td>{config.description}</td>
             <td>
-                <button
-                    type="button"
-                    className="btn-link"
-                    onClick={() => onSave(config.configKey, value)}
-                >
-                    Save
-                </button>
+                {isDeveloper ? (
+                    <span className="muted" style={{ fontSize: "12.5px", fontStyle: "italic" }}>Read-only</span>
+                ) : (
+                    <button
+                        type="button"
+                        className="btn-link"
+                        onClick={() => onSave(config.configKey, value)}
+                    >
+                        Save
+                    </button>
+                )}
             </td>
         </tr>
     );

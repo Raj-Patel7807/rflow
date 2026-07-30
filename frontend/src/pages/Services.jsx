@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
 import { useTenant } from "../context/TenantContext";
+import { useAuth } from "../context/AuthContext";
 
 const emptyForm = {
     serviceName: "",
@@ -15,6 +16,8 @@ const emptyForm = {
 
 export default function Services() {
     const { selectedTenant } = useTenant();
+    const { user } = useAuth();
+    const isDeveloper = user?.role === "DEVELOPER";
     const [services, setServices] = useState([]);
     const [form, setForm] = useState(emptyForm);
     const [editingId, setEditingId] = useState(null);
@@ -151,6 +154,7 @@ export default function Services() {
             {error && <div className="error-box">{error}</div>}
             {message && <div className="success-box">{message}</div>}
 
+            {!isDeveloper && (
             <section className="panel">
                 <h3>{editingId ? "Edit Service" : "Add Service"}</h3>
                 <form className="form-grid" onSubmit={handleSubmit}>
@@ -220,6 +224,7 @@ export default function Services() {
                     </div>
                 </form>
             </section>
+            )}
 
             <section className="panel">
                 <h3>Registered Services</h3>
@@ -246,36 +251,42 @@ export default function Services() {
                                         </span>
                                     </td>
                                     <td className="actions">
-                                        <button
-                                            type="button"
-                                            className="btn-link"
-                                            onClick={() => checkServiceHealth(service)}
-                                        >
-                                            Check Health
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="btn-link"
-                                            onClick={() => startEdit(service)}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="btn-link"
-                                            onClick={() => toggleStatus(service)}
-                                        >
-                                            {service.status === "ACTIVE"
-                                                ? "Disable"
-                                                : "Enable"}
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="btn-link danger"
-                                            onClick={() => deleteService(service.id)}
-                                        >
-                                            Delete
-                                        </button>
+                                        {isDeveloper ? (
+                                            <span className="muted" style={{ fontSize: "12.5px", fontStyle: "italic" }}>Disabled in Demo Mode</span>
+                                        ) : (
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    className="btn-link"
+                                                    onClick={() => checkServiceHealth(service)}
+                                                >
+                                                    Check Health
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="btn-link"
+                                                    onClick={() => startEdit(service)}
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="btn-link"
+                                                    onClick={() => toggleStatus(service)}
+                                                >
+                                                    {service.status === "ACTIVE"
+                                                        ? "Disable"
+                                                        : "Enable"}
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="btn-link danger"
+                                                    onClick={() => deleteService(service.id)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </>
+                                        )}
                                     </td>
                                 </tr>
                             ))}
