@@ -44,7 +44,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> getUsers(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         Long tenantId = authorizationService.resolveTenantId(session);
 

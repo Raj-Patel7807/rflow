@@ -31,7 +31,7 @@ public class TenantController {
     @GetMapping("/all")
     public ResponseEntity<List<TenantResponse>> getAll(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         return ResponseEntity.ok(tenantService.getAll()
                                               .stream()
@@ -104,7 +104,7 @@ public class TenantController {
     @GetMapping("/selected")
     public ResponseEntity<TenantResponse> selected(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         Long tenantId = (Long) session.getAttribute("selectedTenantId");
 

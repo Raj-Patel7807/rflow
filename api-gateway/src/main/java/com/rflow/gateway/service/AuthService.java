@@ -42,8 +42,9 @@ public class AuthService {
             throw new RuntimeException("Invalid Password");
         }
 
-        if(!"SUPER_ADMIN".equals(user.getRole())) {
-            throw new RuntimeException("Only SUPER_ADMIN can access admin portal");
+        String role = user.getRole();
+        if(!"SUPER_ADMIN".equals(role) && !"TENANT_ADMIN".equals(role) && !"DEVELOPER".equals(role)) {
+            throw new RuntimeException("Only authorized roles can access admin portal");
         }
 
         session.setAttribute("userId", user.getId());
@@ -88,7 +89,8 @@ public class AuthService {
         User user = userRepository.findById(userId)
                                   .orElseThrow(() -> new RuntimeException("User Not Found"));
 
-        if(!"SUPER_ADMIN".equals(user.getRole())) {
+        String role = user.getRole();
+        if(!"SUPER_ADMIN".equals(role) && !"TENANT_ADMIN".equals(role) && !"DEVELOPER".equals(role)) {
             throw new RuntimeException("Forbidden");
         }
 

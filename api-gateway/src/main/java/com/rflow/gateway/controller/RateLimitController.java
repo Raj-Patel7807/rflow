@@ -32,7 +32,7 @@ public class RateLimitController {
     @GetMapping
     public ResponseEntity<List<RateLimitPolicy>> getAll(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         Long tenantId = authorizationService.resolveTenantId(session);
 
@@ -50,7 +50,7 @@ public class RateLimitController {
     @PostMapping
     public ResponseEntity<RateLimitPolicy> create(@RequestBody CreateRateLimitRequest request, HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
 
         Long userId = (Long) session.getAttribute("userId");
 
@@ -63,7 +63,7 @@ public class RateLimitController {
     @GetMapping("/service/{serviceId}")
     public ResponseEntity<List<RateLimitPolicy>> getPolicies(@PathVariable Long serviceId, HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         return ResponseEntity.ok(rateLimitService.getServicePolicies(serviceId));
     }
@@ -75,7 +75,7 @@ public class RateLimitController {
     public ResponseEntity<RateLimitPolicy> update(@PathVariable Long id, @RequestBody UpdateRateLimitRequest request,
                                                   HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
 
         return ResponseEntity.ok(rateLimitService.update(id, request));
     }
@@ -86,7 +86,7 @@ public class RateLimitController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id, HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
 
         rateLimitService.delete(id);
 

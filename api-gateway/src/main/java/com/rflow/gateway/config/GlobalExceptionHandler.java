@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 
         if("Forbidden".equals(message)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                                 .body(Map.of("error", message));
+                                 .body(Map.of("error", "You do not have permission to perform this action."));
         }
 
         return ResponseEntity.badRequest()

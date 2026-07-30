@@ -43,7 +43,7 @@ public class DashboardController {
     @GetMapping("/system")
     public ResponseEntity<SystemStatsResponse> systemStats(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         return ResponseEntity.ok(dashboardService.systemStats());
     }
@@ -54,7 +54,7 @@ public class DashboardController {
     @GetMapping("/stats")
     public ResponseEntity<DashboardStatsResponse> stats(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         Long tenantId = authorizationService.resolveTenantId(session);
 
@@ -67,7 +67,7 @@ public class DashboardController {
     @GetMapping("/top-services")
     public ResponseEntity<?> topServices(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         Long tenantId = authorizationService.resolveTenantId(session);
 
@@ -80,7 +80,7 @@ public class DashboardController {
     @GetMapping("/slow-services")
     public ResponseEntity<?> slowServices(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         Long tenantId = authorizationService.resolveTenantId(session);
 
@@ -93,7 +93,7 @@ public class DashboardController {
     @GetMapping("/request-chart")
     public ResponseEntity<?> requestChart(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         Long tenantId = authorizationService.resolveTenantId(session);
 
@@ -107,7 +107,7 @@ public class DashboardController {
     public ResponseEntity<List<RequestLogResponse>> recentRequests(HttpSession session,
                                                                    @RequestParam(defaultValue = "10") int limit) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         Long tenantId = authorizationService.resolveTenantId(session);
 

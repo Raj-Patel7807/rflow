@@ -29,7 +29,7 @@ public class GatewayConfigController {
     @GetMapping
     public ResponseEntity<List<GatewayConfiguration>> getAll(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         return ResponseEntity.ok(gatewayConfigService.getAll());
     }

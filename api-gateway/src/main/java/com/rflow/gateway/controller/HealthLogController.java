@@ -28,7 +28,7 @@ public class HealthLogController {
                                                           @RequestParam(defaultValue = "0") int page,
                                                           @RequestParam(defaultValue = "20") int size) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         Long tenantId = authorizationService.resolveTenantId(session);
 
@@ -41,7 +41,7 @@ public class HealthLogController {
     @PostMapping("/check")
     public ResponseEntity<?> checkService(HttpSession session, @RequestParam Long serviceId) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
 
         Long tenantId = authorizationService.resolveTenantId(session);
 
@@ -54,7 +54,7 @@ public class HealthLogController {
     @PostMapping("/check-all")
     public ResponseEntity<?> checkAllServices(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
 
         Long tenantId = authorizationService.resolveTenantId(session);
 

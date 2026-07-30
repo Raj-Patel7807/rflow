@@ -25,7 +25,7 @@ public class ServiceController {
     @GetMapping
     public ResponseEntity<?> getAll(HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         Long tenantId = authorizationService.resolveTenantId(session);
 
@@ -38,7 +38,7 @@ public class ServiceController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id, HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN", "DEVELOPER");
 
         return ResponseEntity.ok(adminService.getById(id));
     }
@@ -49,7 +49,7 @@ public class ServiceController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ServiceRequest request, HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
 
         Long tenantId = authorizationService.resolveTenantId(session);
         Long userId = (Long) session.getAttribute("userId");
@@ -63,7 +63,7 @@ public class ServiceController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody ServiceRequest request, HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
 
         return ResponseEntity.ok(adminService.update(id, request));
     }
@@ -74,7 +74,7 @@ public class ServiceController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id, HttpSession session) {
 
-        authorizationService.requireRole(session, "SUPER_ADMIN");
+        authorizationService.requireRoles(session, "SUPER_ADMIN", "TENANT_ADMIN");
 
         adminService.delete(id);
 
